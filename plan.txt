@@ -1,0 +1,7 @@
+1. Call get timelog api
+  a. If already 9 record exists, exit
+  b. Else get time of last log time
+    i. Min of (curr_time, last log time + 1h)
+    ii. Use this time as the cron start time
+    iii. Run cron after every 1h after that
+    
