@@ -1,22 +1,32 @@
 import subprocess
 import time
+import platform
 
 # Path to the Python file you want to run
 script_path = "index.py"  # <-- replace with your file
 
 # Time to wait between runs (seconds)
 interval_seconds = 5
+PYTHON = "python" if platform.system() == "Windows" else "python3"
+print(PYTHON)
 
 try:
     while True:
         print("Starting script:", script_path)
         # Run the other script and wait for it to finish
-        result = subprocess.run(["python", script_path], capture_output=True, text=True)
+        result = subprocess.Popen(
+            [PYTHON, "-u", script_path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True
+        )
 
-        # Print output from the script
-        print("Script output:\n", result.stdout)
-        if result.stderr:
-            print("Script errors:\n", result.stderr)
+        # Print output in real time
+        for line in result.stdout:
+            print(line, end="")
+
+        # Wait for process to finish
+        result.wait()
 
         # Check exit code
         if result.returncode == 0:

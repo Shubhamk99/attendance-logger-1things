@@ -181,6 +181,7 @@ class OneThingApi():
             return self.responseLog.response(True, "Token valid")
         
     def createTimeLog(self, count = 1):
+        self.stopTimeLog()
         idleTime = self.calculateIdleTime()
         json = {
             "attendance_date": self.customDate.attendanceDate,
@@ -217,6 +218,39 @@ class OneThingApi():
 
         return self.responseLog.response(response, "Created time log")
     
+    def stopTimeLog(self, count = 1):
+        data = self.getTimeLog()['timelog']
+        if data == None:
+            return
+        dummyObject = {
+            "attendance_date": "2026-05-18",
+            "time_log_id": 8652129,
+            "startdate_time": "2026-05-18 10:20:46",
+            "enddate_time": "2026-05-18 11:20:46",
+            "autostop": 1
+        }
+
+        json = {
+            "attendance_date": self.customDate.attendanceDate,
+            "time_log_id": data["id"],
+            "startdate_time": data["start_date_time"],
+            "enddate_time": data["end_date_time"],
+            "autostop": 1
+        }
+
+        response = self.apiClient.post(
+            headers={
+                "Authorization": self.token,
+            },
+            endpoint="/stopTimeBlock",
+            json=json
+        )
+
+        if (response['data']['status'] == False and count<5):
+            print("Stop time log failed", response['data'], json)
+
+        return self.responseLog.response(response, "Stoped time log")
+
     def logIn(self):
         data = None
         if not self.isTokenValid(): 
@@ -250,6 +284,7 @@ class OneThingApi():
             }
         )
 
+        print("Time log data: ", response['data'])
         return self.responseLog.response(response['data'], "Get time log data.")
     
     def getSignInMailIds(self):
