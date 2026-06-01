@@ -183,12 +183,21 @@ class OneThingApi():
     def createTimeLog(self, count = 1):
         self.stopTimeLog()
         idleTime = self.calculateIdleTime()
+            # "selectedTasks":[
+            #     {
+            #         "task_id":"943172",
+            #         "task_title":"Development",
+            #         "workplace_id":"3318",
+            #         "workplace_name":"PKG - Alpha Data Recruitment",
+            #         "scheduler_id": int(time.time() * 1000),
+            #     }
+            # ]
         json = {
             "attendance_date": self.customDate.attendanceDate,
             "selectedTasks":[
                 {
-                    "task_id":"940641",
-                    "task_title":"Onboarding",
+                    "task_id":"943172",
+                    "task_title":"Development",
                     "workplace_id":"3318",
                     "workplace_name":"PKG - Alpha Data Recruitment",
                     "scheduler_id": int(time.time() * 1000),
@@ -525,7 +534,7 @@ class CRON:
             self.sendSingingInfo()
             return self.responseLog.response(schedule.CancelJob, "Cron cycle, END.")
         
-        self.nextCronTime = datetime.now() + timedelta(hours=1, seconds=1) #Isec buffer for proper esitmationi calculation
+        self.nextCronTime = datetime.now() + timedelta(hours=1, seconds=1) #1 sec buffer for proper esitmationi calculation
         return self.responseLog.response(True, "Cron cycle.")
         
     def main(self):

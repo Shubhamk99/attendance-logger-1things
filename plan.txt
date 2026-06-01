@@ -4,4 +4,8 @@
     i. Min of (curr_time, last log time + 1h)
     ii. Use this time as the cron start time
     iii. Run cron after every 1h after that
-    
+
+
+In sendSingingInfo in CRON:
+  Call stopTask before calling sendSingingInfo
+
