@@ -183,15 +183,6 @@ class OneThingApi():
     def createTimeLog(self, count = 1):
         self.stopTimeLog()
         idleTime = self.calculateIdleTime()
-            # "selectedTasks":[
-            #     {
-            #         "task_id":"943172",
-            #         "task_title":"Development",
-            #         "workplace_id":"3318",
-            #         "workplace_name":"PKG - Alpha Data Recruitment",
-            #         "scheduler_id": int(time.time() * 1000),
-            #     }
-            # ]
         json = {
             "attendance_date": self.customDate.attendanceDate,
             "selectedTasks":[
@@ -231,13 +222,6 @@ class OneThingApi():
         data = self.getTimeLog()['timelog']
         if data == None:
             return
-        dummyObject = {
-            "attendance_date": "2026-05-18",
-            "time_log_id": 8652129,
-            "startdate_time": "2026-05-18 10:20:46",
-            "enddate_time": "2026-05-18 11:20:46",
-            "autostop": 1
-        }
 
         json = {
             "attendance_date": self.customDate.attendanceDate,
@@ -281,7 +265,7 @@ class OneThingApi():
 
         return self.responseLog.response(self.token, f"Login funtion, token: {self.token}")
 
-    def getTimeLog(self):
+    def getTimeLog(self, displayTimeLog = False):
         response = self.apiClient.post(
             headers={
                 "Authorization": self.token,
@@ -293,9 +277,9 @@ class OneThingApi():
             }
         )
 
-        print("Time log data: ", response['data'])
-        return self.responseLog.response(response['data'], "Get time log data.")
-    
+        log = response['data'] if displayTimeLog else ''
+        return self.responseLog.response(response['data'], f"Get time log data. {log}")
+
     def getSignInMailIds(self):
         response = self.apiClient.post(
             headers={
@@ -316,20 +300,6 @@ class OneThingApi():
         return self.responseLog.response(responseData, "Get signin mailIds")
 
     def getInTime(self):
-        # jsonData = {
-        #     "attendance_date": self.customDate.attendanceDate,
-        #     "end_date": self.customDate.monthEnd,
-        #     "start_date": self.customDate.monthStart,
-        #     "workplace_id":"3318",
-        # }
-
-        # response = self.apiClient.post(
-        #     headers={
-        #         "Authorization": self.token,
-        #     },
-        #     endpoint="/attendance_data",
-        #     json=jsonData
-        # )
 
         data = self.getTimeLog()['todaylogs']
         times = []
@@ -481,24 +451,30 @@ class CRON:
         lastLogoutTime = datetime.strptime(lastLogoutTimeStr, "%Y-%m-%d %H:%M:%S")
         now = datetime.now()
         
-        start_time = max(now, lastLogoutTime)
+        startTime = max(now, lastLogoutTime)
         
         print("Now:", now)
         print("Last logout:", lastLogoutTime)
-        print("Start time:", start_time)
+        print("Start time:", startTime)
         
-        return self.responseLog.response(start_time, f"Next login time on starting the program {start_time}")
-
-    def waitTime(self, timeLog):
+        return self.responseLog.response(startTime, f"Next login time {startTime}")
+ 
+    def waitTime(self, logType='taskLog'):
+        timeLog = self.oneThingApi.getTimeLog()
+        logObject = {
+            'taskLog': "Time remaining for the next run",
+            'signingOff': "Time remaining for the signing off"
+        }
         lastLoggedTime = self.oneThingApi.getLastLogOutTime(timeLog)
         startTime = self.getstartTime(lastLoggedTime)
 
         now = datetime.now()
-        startTime += timedelta(seconds=0)
+        startTime += timedelta(seconds=10)
+        print("Next login time after adding 10 seconds:", startTime)
         while (startTime - now).total_seconds() > 0:
             now = datetime.now()
             timeDiff = self.oneThingApi.calculateTimeDiff(startTime, now)
-            print(f"Time remaining for first run log: {timeDiff}" )
+            print(f"{logObject[logType]}: {timeDiff}" )
             time.sleep(10)
 
     def isWaitTimeMoreThan175mins(self):
@@ -509,8 +485,9 @@ class CRON:
         now = datetime.now()
         return (now - lastLoggedTime).total_seconds() > 4500
 
-    def isLoggingNeed(self, obj):
-        data = len(obj['timelogidarray']) != 9
+    def isLoggingNeed(self):
+        timeLog = self.oneThingApi.getTimeLog()
+        data = len(timeLog['timelogidarray']) != 9
         return self.responseLog.response(data, f"Logging needed {data}")
 
     def sendSingingInfo(self):
@@ -519,43 +496,34 @@ class CRON:
         return self.responseLog.response(None, "Signin and signout mail.")
 
     def cronCycle(self):
-        timeLog = self.oneThingApi.getTimeLog()
-        if self.isLoggingNeed(timeLog):
+        if self.isLoggingNeed():
             self.oneThingApi.createTimeLog()
+            self.oneThingApi.getTimeLog(True)
         
         # To check if after adding the logs we have reached the total logs required.
-        timeLog = self.oneThingApi.getTimeLog()
-        if not self.isLoggingNeed(timeLog): 
+        if not self.isLoggingNeed(): 
 
             # Wait till last tasks logout time
-            self.waitTime(timeLog)
+            self.waitTime('signingOff')
 
             # Send signing info
             self.sendSingingInfo()
-            return self.responseLog.response(schedule.CancelJob, "Cron cycle, END.")
         
-        self.nextCronTime = datetime.now() + timedelta(hours=1, seconds=1) #1 sec buffer for proper esitmationi calculation
         return self.responseLog.response(True, "Cron cycle.")
         
     def main(self):
         self.oneThingApi.logIn()
-        timeLog = self.oneThingApi.getTimeLog()
-        if self.isLoggingNeed(timeLog):
-            self.waitTime(timeLog)
-            res = self.cronCycle()
-            # If already the last call don't do anything
-            if res == True:
-                schedule.every(61).minutes.do(self.cronCycle)
+        self.oneThingApi.getTimeLog(True)
 
-                self.nextCronTime = datetime.now() + timedelta(hours=1, minutes=1)
-                while len(schedule.jobs):
-                    schedule.run_pending()
-                    time.sleep(10)
-                    timeDiff = self.oneThingApi.calculateTimeDiff(self.nextCronTime, datetime.now())
-                    print(f"Time remaining for next cron: {timeDiff}" )
+        if not self.isLoggingNeed():
+            print('All the tasks are logged, will send the signing info after waiting for the current task to end.')
+            self.cronCycle()
+            return self.responseLog.response(True, "Today's Job Done.")
 
-        # In case attendace is logged but not signing info
-        else:
+
+        print('Logging is needed. Will start the cron after the current task ends.')
+        while(self.isLoggingNeed()):
+            self.waitTime()
             self.cronCycle()
 
         return self.responseLog.response(True, "Today's Job Done.")
@@ -573,18 +541,4 @@ def main():
     cron = CRON(oneThingApi, responseLogCRON)
     cron.main()
 
-def second():
-    client = APIClient()
-
-    # Initialize OneThing
-    customeDate = CustomeDate()
-    responseLogOneThingApi = ResponseLog("OneThingApi")
-    oneThingApi = OneThingApi(client, customeDate, responseLogOneThingApi)
-
-    # Cron
-    responseLogCRON = ResponseLog("CRON")
-    cron = CRON(oneThingApi, responseLogCRON)
-    print(cron.isWaitTimeMoreThan175mins())
-
 main()
-# second()
