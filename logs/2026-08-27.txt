@@ -206,3 +206,9 @@
 2026-08-27 21:57:13 INFO attendance_logger.OneThingApi: Get today's signIn and signOut info.
 2026-08-27 21:57:13 INFO attendance_logger.OneThingApi: Get all today's task. 
 2026-08-27 21:57:14 INFO attendance_logger.OneThingApi: Send sign out mail.
+2026-08-27 21:57:14 INFO attendance_logger.git_sync: Committed today's logs.
+2026-08-27 21:57:16 INFO attendance_logger.git_sync: Pushed today's logs.
+2026-08-27 21:57:16 INFO attendance_logger.CRON: Signin and signout mail.
+2026-08-27 21:57:16 INFO attendance_logger.CRON: Cron cycle.
+2026-08-27 21:57:16 INFO attendance_logger.CRON: Today's Job Done.
+2026-08-27 21:57:16 INFO attendance_logger.runner: Child script exited normally. Stopping runner.
