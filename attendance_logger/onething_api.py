@@ -15,12 +15,23 @@ class OneThingApi:
         with open("token.json", "r", encoding="utf-8") as f:
             self.token = json.load(f)['token']
 
+    def _postWithRetry(self, endpoint, headers=None, json=None, retries=3, backoff=5):
+        # apiClient.post() returns {"error": ...} (no "data" key) on HTTP
+        # errors, timeouts, or network exceptions instead of raising - this
+        # retries those transient failures instead of letting every caller's
+        # response['data'] access crash with an unhandled KeyError.
+        response = None
+        for attempt in range(1, retries + 1):
+            response = self.apiClient.post(endpoint=endpoint, headers=headers, json=json)
+            if 'error' not in response:
+                return response
+            logger.warning("Request to %s failed (attempt %s/%s): %s", endpoint, attempt, retries, response)
+            if attempt < retries:
+                time.sleep(backoff)
+        raise RuntimeError(f"Request to {endpoint} failed after {retries} attempts: {response}")
+
     def _authedPost(self, endpoint, json=None):
-        return self.apiClient.post(
-            endpoint=endpoint,
-            headers={"Authorization": self.token},
-            json=json,
-        )
+        return self._postWithRetry(endpoint, headers={"Authorization": self.token}, json=json)
 
     def getLastLogOutTime(self, obj):
         if obj['timelog'] == None:
@@ -126,8 +137,8 @@ class OneThingApi:
         data = None
         if not self.isTokenValid():
             logger.info('Logging in')
-            res = self.apiClient.post(
-                endpoint="/login",
+            res = self._postWithRetry(
+                "/login",
                 json={
                     "email": "shubham.k@neosoftmail.com",
                     "password": "768468"
@@ -223,12 +234,27 @@ class OneThingApi:
         # returns both kinds.
         taskData = self.getTodayTasks()
 
-        total_seconds = 0
-        for task in taskData:
-            start = datetime.strptime(task['start_date'], "%Y-%m-%d %H:%M:%S")
-            end = datetime.strptime(task['end_date'], "%Y-%m-%d %H:%M:%S")
-            total_seconds += (end - start).total_seconds()
+        intervals = sorted(
+            (
+                datetime.strptime(task['start_date'], "%Y-%m-%d %H:%M:%S"),
+                datetime.strptime(task['end_date'], "%Y-%m-%d %H:%M:%S"),
+            )
+            for task in taskData
+        )
 
+        # Merge overlapping/adjacent blocks before summing, so overlapping
+        # duplicate blocks (e.g. two runner.py instances racing) don't count
+        # the same wall-clock time twice. Back-to-back scheduled blocks are
+        # adjacent, not overlapping, so this still sums to the same total as
+        # a plain sum in the normal case.
+        merged = []
+        for start, end in intervals:
+            if merged and start <= merged[-1][1]:
+                merged[-1] = (merged[-1][0], max(merged[-1][1], end))
+            else:
+                merged.append((start, end))
+
+        total_seconds = sum((end - start).total_seconds() for start, end in merged)
         hours = total_seconds / 3600
         return self.responseLog.response(hours, f"Total scheduled task hours today: {hours}")
 
