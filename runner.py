@@ -6,9 +6,16 @@ import time
 import platform
 
 from attendance_logger.logging_config import configure_logging, get_logger, get_project_root
+from attendance_logger.holidays import isHolidayToday
 
 configure_logging()
 logger = get_logger("runner")
+
+# Skip the whole day if today is marked as a holiday - checked first, before
+# the lock/caffeinate/loop, so a holiday does nothing at all beyond this.
+if isHolidayToday():
+    logger.info("Skipping today's run.")
+    sys.exit(0)
 
 # Path to the Python file you want to run
 script_path = "run.py"

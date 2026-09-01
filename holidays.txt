@@ -1,0 +1,4 @@
+# Mark a weekday as a holiday by adding its date below, one per line, in
+# YYYY-MM-DD format (e.g. 2026-10-20). runner.py - and a direct
+# `python3 run.py` - skip the whole day if today's date is listed here.
+# Lines starting with # and blank lines are ignored.
