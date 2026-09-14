@@ -1,0 +1,6 @@
+.connecto_session.json
+*.jpg
+*.jpeg
+*.png
+*.heic
+photos/
