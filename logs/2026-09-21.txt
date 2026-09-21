@@ -1,0 +1,1317 @@
+2026-09-21 09:15:48 ERROR attendance_logger.runner: Another runner.py instance already holds /Users/Shared/Personal/attendance-logger-1things/runner.lock. Exiting.
+2026-09-21 09:15:48 INFO attendance_logger.runner: Using interpreter: /opt/homebrew/opt/python@3.14/bin/python3.14
+2026-09-21 09:15:48 INFO attendance_logger.runner: Starting script: run.py
+2026-09-21 09:33:18 ERROR attendance_logger.connecto_auto: Connecto get-todays-attendance failed - proceeding without a status check.
+Traceback (most recent call last):
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/urllib3/connection.py", line 204, in _new_conn
+    sock = connection.create_connection(
+        (self._dns_host, self.port),
+    ...<2 lines>...
+        socket_options=self.socket_options,
+    )
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/urllib3/util/connection.py", line 60, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socket.py", line 989, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/urllib3/connectionpool.py", line 788, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/urllib3/connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/urllib3/connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/urllib3/connectionpool.py", line 1106, in _validate_conn
+    conn.connect()
+    ~~~~~~~~~~~~^^
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/urllib3/connection.py", line 759, in connect
+    self.sock = sock = self._new_conn()
+                       ~~~~~~~~~~~~~~^^
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/urllib3/connection.py", line 211, in _new_conn
+    raise NameResolutionError(self.host, self, e) from e
+urllib3.exceptions.NameResolutionError: HTTPSConnection(host='connecto.neosofttech.com', port=443): Failed to resolve 'connecto.neosofttech.com' ([Errno 8] nodename nor servname provided, or not known)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/requests/adapters.py", line 696, in send
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
+    )
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/urllib3/connectionpool.py", line 842, in urlopen
+    retries = retries.increment(
+        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+    )
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/urllib3/util/retry.py", line 543, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='connecto.neosofttech.com', port=443): Max retries exceeded with url: /public/api/v1/get-todays-attendance (Caused by NameResolutionError("HTTPSConnection(host='connecto.neosofttech.com', port=443): Failed to resolve 'connecto.neosofttech.com' ([Errno 8] nodename nor servname provided, or not known)"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/Shared/Personal/attendance-logger-1things/connecto-auth-probe/connecto_auto.py", line 148, in _todaysStatus
+    response = cc.get_todays_attendance(session["user_id"], session["token"])
+  File "/Users/Shared/Personal/attendance-logger-1things/connecto-auth-probe/connecto_client.py", line 100, in get_todays_attendance
+    return _post("api/v1/get-todays-attendance", {"user_id": user_id}, auth_headers(token))
+  File "/Users/Shared/Personal/attendance-logger-1things/connecto-auth-probe/connecto_client.py", line 50, in _post
+    resp = requests.post(BASE_URL + path, data=fields, headers=headers or {}, timeout=15)
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/requests/api.py", line 134, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/requests/api.py", line 71, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/requests/sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/requests/sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+  File "/Users/comprint/Library/Python/3.14/lib/python/site-packages/requests/adapters.py", line 729, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='connecto.neosofttech.com', port=443): Max retries exceeded with url: /public/api/v1/get-todays-attendance (Caused by NameResolutionError("HTTPSConnection(host='connecto.neosofttech.com', port=443): Failed to resolve 'connecto.neosofttech.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-09-21 09:33:18 WARNING attendance_logger.connecto_auto: Connecto sign-in skipped: no photo (and no fallback.<ext>) found in /Users/Shared/Personal/attendance-logger-1things/connecto-auth-probe/photos/signin.
+2026-09-21 09:48:55 WARNING attendance_logger.onething_api: Request to /checkconnectosignin failed (attempt 1/3): {'error': 'Request failed', 'details': 'HTTPSConnectionPool(host=\'be.1-thing.in\', port=443): Max retries exceeded with url: /checkconnectosignin (Caused by NameResolutionError("HTTPSConnection(host=\'be.1-thing.in\', port=443): Failed to resolve \'be.1-thing.in\' ([Errno 8] nodename nor servname provided, or not known)"))'}
+2026-09-21 10:49:55 WARNING attendance_logger.onething_api: Request to /checkconnectosignin failed (attempt 2/3): {'error': 'Request failed', 'details': 'HTTPSConnectionPool(host=\'be.1-thing.in\', port=443): Max retries exceeded with url: /checkconnectosignin (Caused by NameResolutionError("HTTPSConnection(host=\'be.1-thing.in\', port=443): Failed to resolve \'be.1-thing.in\' ([Errno 8] nodename nor servname provided, or not known)"))'}
+2026-09-21 10:50:03 INFO attendance_logger.onething_api: Token check: {'headers': {'Date': 'Mon, 21 Sep 2026 05:20:02 GMT', 'Server': 'Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.6.40', 'Vary': 'Authorization,Origin', 'X-Powered-By': 'PHP/5.6.40', 'Cache-Control': 'no-cache, private', 'Access-Control-Allow-Origin': 'https://1-thing.in', 'Set-Cookie': 'laravel_session=eyJpdiI6Ik9HcVBuY0Z6OE12ejRZVXZuUkVIQ2c9PSIsInZhbHVlIjoiOVhTQzJqN2l2RndOc1wvMHN2Vk90Tlh2Vm5FN0VKcm8wZTB0eXlSSWlHNk1TanFCZFk3YU9QWGY2OStGa05PbThwdWNORTBxQ3M3SUs4dzNHNWtlMThBPT0iLCJtYWMiOiIxODlmOGY3NzhhZGI2ZGM3ZWYxZjY4NTE3ZGZiZTcwZjNiYjRmMWNkZTRhNWRlNGEyMDMzMGM2MjgzN2U0ZjdmIn0%3D; expires=Mon, 21-Sep-2026 07:20:03 GMT; Max-Age=7200; path=/; httponly', 'Content-Length': '97', 'Keep-Alive': 'timeout=5, max=100', 'Connection': 'Keep-Alive', 'Content-Type': 'application/json'}, 'status_code': 200, 'data': {'success': True, 'data': {'attendance_date': '2026-09-21', 'signin_time': False, 'signout_time': False}}}
+2026-09-21 10:50:03 INFO attendance_logger.OneThingApi: Token valid
+2026-09-21 10:50:03 INFO attendance_logger.OneThingApi: Login funtion, token: eyJpdiI6IjNrUE1OZG1Ka3FJQkVtOURES0d1Nnc9PSIsInZhbHVlIjoibnIwNkhJempoQzBKXC9KaVwvekxxOGd1cEFtOWxCTjI0Z01tQTliN0ZXc1JvPSIsIm1hYyI6ImNjNTFiMzM2MjQwNWYxNWQ4OGYzZWZhNTllOGM0NDBkNDBkMWZmYjg4MDBjZjZmMDkwMjkwNGQ3Mjc2MWFiMjYifQ==
+2026-09-21 11:51:04 WARNING attendance_logger.onething_api: Request to /lasttimelog failed (attempt 1/3): {'error': 'Request timed out'}
+2026-09-21 12:24:11 INFO attendance_logger.OneThingApi: Get time log data. {'status': True, 'timelog': None, 'todaylogs': [], 'totalhrs': '00:00', 'totalidlehrs': '00:00', 'activelogdata': [], 'currenttime': '2026-09-21 12:24:11', 'timelogidarray': []}
+2026-09-21 12:24:12 INFO attendance_logger.OneThingApi: Get all today's task. []
+2026-09-21 12:24:13 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 12:24:13 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 0.0
+2026-09-21 12:24:13 INFO attendance_logger.CRON: Logging needed True (total hours: 0.0)
+2026-09-21 12:24:13 INFO attendance_logger.cron: Logging is needed. Will start the cron after the current task ends.
+2026-09-21 12:24:13 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 12:24:13 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 0.0
+2026-09-21 12:24:13 INFO attendance_logger.CRON: Logging needed True (total hours: 0.0)
+2026-09-21 12:40:03 WARNING attendance_logger.onething_api: Request to /lasttimelog failed (attempt 1/3): {'error': 'Request failed', 'details': "('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))"}
+2026-09-21 12:51:57 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 12:51:57 INFO attendance_logger.OneThingApi: Last log out time or current time: 2026-09-21 12:51:57
+2026-09-21 12:51:57 INFO attendance_logger.cron: Now: 2026-09-21 12:51:57.395723
+2026-09-21 12:51:57 INFO attendance_logger.cron: Last logout: 2026-09-21 12:51:57
+2026-09-21 12:51:57 INFO attendance_logger.cron: Start time: 2026-09-21 12:51:57.395723
+2026-09-21 12:51:57 INFO attendance_logger.CRON: Next login time 2026-09-21 12:51:57.395723
+2026-09-21 12:51:57 INFO attendance_logger.cron: Next login time after adding 10 seconds: 2026-09-21 12:52:07.395723
+2026-09-21 12:51:57 INFO attendance_logger.cron: Time remaining for the next run: 00:00:09
+2026-09-21 12:52:07 INFO attendance_logger.cron: Time remaining for the next run: 00:00:00
+2026-09-21 13:18:59 WARNING attendance_logger.onething_api: Request to /gettodayTasks failed (attempt 1/3): {'error': 'Request timed out'}
+2026-09-21 13:19:06 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 13:19:06 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 0.0
+2026-09-21 13:19:06 INFO attendance_logger.CRON: Logging needed True (total hours: 0.0)
+2026-09-21 13:19:07 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 13:19:07 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 13:19:08 INFO attendance_logger.OneThingApi: Backfilled gap 2026-09-21 09:00:00 - 2026-09-21 10:00:00
+2026-09-21 13:19:08 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 13:19:12 INFO attendance_logger.OneThingApi: Backfilled gap 2026-09-21 10:00:00 - 2026-09-21 11:00:00
+2026-09-21 13:19:12 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 13:19:13 INFO attendance_logger.OneThingApi: Backfilled gap 2026-09-21 11:00:00 - 2026-09-21 12:00:00
+2026-09-21 13:19:14 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 13:19:14 INFO attendance_logger.OneThingApi: Backfilled gap 2026-09-21 12:00:00 - 2026-09-21 13:00:00
+2026-09-21 13:19:14 INFO attendance_logger.OneThingApi: Backfilled 4 gap block(s): [(datetime.datetime(2026, 9, 21, 9, 0), datetime.datetime(2026, 9, 21, 10, 0)), (datetime.datetime(2026, 9, 21, 10, 0), datetime.datetime(2026, 9, 21, 11, 0)), (datetime.datetime(2026, 9, 21, 11, 0), datetime.datetime(2026, 9, 21, 12, 0)), (datetime.datetime(2026, 9, 21, 12, 0), datetime.datetime(2026, 9, 21, 13, 0))]
+2026-09-21 13:19:15 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 13:19:15 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 4.0
+2026-09-21 13:19:15 INFO attendance_logger.CRON: Logging needed True (total hours: 4.0)
+2026-09-21 13:19:16 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 13:19:18 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 13:19:20 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 13:19:20 INFO attendance_logger.OneThingApi: Last log out time or current time: 2026-09-21 13:19:20
+2026-09-21 13:19:22 INFO attendance_logger.OneThingApi: Created time log
+2026-09-21 13:19:23 INFO attendance_logger.OneThingApi: Get time log data. {'status': True, 'timelog': {'id': 9070386, 'start_date_time': '2026-09-21 13:19:21', 'end_date_time': '2026-09-21 14:19:21', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'is_currectly_working': '1', 'idletime': '00:00:00', 'setidle': '0'}, 'todaylogs': {'01:19 PM - 02:19 PM': {'duration': 60, 'idletime': '00:00:00', 'is_currectly_working': '1', 'taskarray': [{'log_id': 11289418, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}}, 'totalhrs': '00:00', 'totalidlehrs': '00:00', 'activelogdata': [{'log_id': 11289418, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}], 'currenttime': '2026-09-21 13:19:22', 'timelogidarray': ['9070386']}
+2026-09-21 13:19:24 INFO attendance_logger.OneThingApi: Get all today's task. [{'id': 11289411, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 09:00:00', 'end_date': '2026-09-21 10:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976947953', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289414, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 10:00:00', 'end_date': '2026-09-21 11:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976948979', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289415, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 11:00:00', 'end_date': '2026-09-21 12:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976952800', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289416, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 12:00:00', 'end_date': '2026-09-21 13:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976954070', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289418, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 13:19:21', 'end_date': '2026-09-21 14:19:21', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976960117', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9070386', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}]
+2026-09-21 13:19:25 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 13:19:25 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 5.0
+2026-09-21 13:19:25 INFO attendance_logger.CRON: Logging needed True (total hours: 5.0)
+2026-09-21 13:19:25 INFO attendance_logger.CRON: Cron cycle.
+2026-09-21 13:19:25 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 13:19:25 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 5.0
+2026-09-21 13:19:25 INFO attendance_logger.CRON: Logging needed True (total hours: 5.0)
+2026-09-21 13:19:26 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 13:19:26 INFO attendance_logger.OneThingApi: Last log out time or current time: 2026-09-21 14:19:21
+2026-09-21 13:19:26 INFO attendance_logger.cron: Now: 2026-09-21 13:19:26.133606
+2026-09-21 13:19:26 INFO attendance_logger.cron: Last logout: 2026-09-21 14:19:21
+2026-09-21 13:19:26 INFO attendance_logger.cron: Start time: 2026-09-21 14:19:21
+2026-09-21 13:19:26 INFO attendance_logger.CRON: Next login time 2026-09-21 14:19:21
+2026-09-21 13:19:26 INFO attendance_logger.cron: Next login time after adding 10 seconds: 2026-09-21 14:19:31
+2026-09-21 13:19:26 INFO attendance_logger.cron: Time remaining for the next run: 01:00:04
+2026-09-21 13:19:36 INFO attendance_logger.cron: Time remaining for the next run: 00:59:54
+2026-09-21 13:19:46 INFO attendance_logger.cron: Time remaining for the next run: 00:59:44
+2026-09-21 13:19:56 INFO attendance_logger.cron: Time remaining for the next run: 00:59:34
+2026-09-21 13:20:06 INFO attendance_logger.cron: Time remaining for the next run: 00:59:24
+2026-09-21 13:20:16 INFO attendance_logger.cron: Time remaining for the next run: 00:59:14
+2026-09-21 13:20:26 INFO attendance_logger.cron: Time remaining for the next run: 00:59:04
+2026-09-21 13:20:36 INFO attendance_logger.cron: Time remaining for the next run: 00:58:54
+2026-09-21 13:20:46 INFO attendance_logger.cron: Time remaining for the next run: 00:58:44
+2026-09-21 13:20:56 INFO attendance_logger.cron: Time remaining for the next run: 00:58:34
+2026-09-21 13:21:06 INFO attendance_logger.cron: Time remaining for the next run: 00:58:24
+2026-09-21 13:21:16 INFO attendance_logger.cron: Time remaining for the next run: 00:58:14
+2026-09-21 13:21:27 INFO attendance_logger.cron: Time remaining for the next run: 00:58:03
+2026-09-21 13:21:37 INFO attendance_logger.cron: Time remaining for the next run: 00:57:53
+2026-09-21 13:21:47 INFO attendance_logger.cron: Time remaining for the next run: 00:57:43
+2026-09-21 13:21:57 INFO attendance_logger.cron: Time remaining for the next run: 00:57:33
+2026-09-21 13:22:07 INFO attendance_logger.cron: Time remaining for the next run: 00:57:23
+2026-09-21 13:22:17 INFO attendance_logger.cron: Time remaining for the next run: 00:57:13
+2026-09-21 13:22:27 INFO attendance_logger.cron: Time remaining for the next run: 00:57:03
+2026-09-21 13:22:37 INFO attendance_logger.cron: Time remaining for the next run: 00:56:53
+2026-09-21 13:22:47 INFO attendance_logger.cron: Time remaining for the next run: 00:56:43
+2026-09-21 13:22:57 INFO attendance_logger.cron: Time remaining for the next run: 00:56:33
+2026-09-21 13:23:07 INFO attendance_logger.cron: Time remaining for the next run: 00:56:23
+2026-09-21 13:23:17 INFO attendance_logger.cron: Time remaining for the next run: 00:56:13
+2026-09-21 13:23:27 INFO attendance_logger.cron: Time remaining for the next run: 00:56:03
+2026-09-21 13:23:37 INFO attendance_logger.cron: Time remaining for the next run: 00:55:53
+2026-09-21 13:23:48 INFO attendance_logger.cron: Time remaining for the next run: 00:55:42
+2026-09-21 13:23:58 INFO attendance_logger.cron: Time remaining for the next run: 00:55:32
+2026-09-21 13:24:08 INFO attendance_logger.cron: Time remaining for the next run: 00:55:22
+2026-09-21 13:24:18 INFO attendance_logger.cron: Time remaining for the next run: 00:55:12
+2026-09-21 13:24:28 INFO attendance_logger.cron: Time remaining for the next run: 00:55:02
+2026-09-21 13:24:38 INFO attendance_logger.cron: Time remaining for the next run: 00:54:52
+2026-09-21 13:24:48 INFO attendance_logger.cron: Time remaining for the next run: 00:54:42
+2026-09-21 13:24:58 INFO attendance_logger.cron: Time remaining for the next run: 00:54:32
+2026-09-21 13:25:08 INFO attendance_logger.cron: Time remaining for the next run: 00:54:22
+2026-09-21 13:25:18 INFO attendance_logger.cron: Time remaining for the next run: 00:54:12
+2026-09-21 13:25:28 INFO attendance_logger.cron: Time remaining for the next run: 00:54:02
+2026-09-21 13:25:38 INFO attendance_logger.cron: Time remaining for the next run: 00:53:52
+2026-09-21 13:25:48 INFO attendance_logger.cron: Time remaining for the next run: 00:53:42
+2026-09-21 13:25:58 INFO attendance_logger.cron: Time remaining for the next run: 00:53:32
+2026-09-21 13:26:09 INFO attendance_logger.cron: Time remaining for the next run: 00:53:21
+2026-09-21 13:26:19 INFO attendance_logger.cron: Time remaining for the next run: 00:53:11
+2026-09-21 13:26:29 INFO attendance_logger.cron: Time remaining for the next run: 00:53:01
+2026-09-21 13:26:39 INFO attendance_logger.cron: Time remaining for the next run: 00:52:51
+2026-09-21 13:26:49 INFO attendance_logger.cron: Time remaining for the next run: 00:52:41
+2026-09-21 13:26:59 INFO attendance_logger.cron: Time remaining for the next run: 00:52:31
+2026-09-21 13:27:09 INFO attendance_logger.cron: Time remaining for the next run: 00:52:21
+2026-09-21 13:27:19 INFO attendance_logger.cron: Time remaining for the next run: 00:52:11
+2026-09-21 13:27:29 INFO attendance_logger.cron: Time remaining for the next run: 00:52:01
+2026-09-21 13:27:39 INFO attendance_logger.cron: Time remaining for the next run: 00:51:51
+2026-09-21 13:27:49 INFO attendance_logger.cron: Time remaining for the next run: 00:51:41
+2026-09-21 13:27:59 INFO attendance_logger.cron: Time remaining for the next run: 00:51:31
+2026-09-21 13:28:09 INFO attendance_logger.cron: Time remaining for the next run: 00:51:21
+2026-09-21 13:28:19 INFO attendance_logger.cron: Time remaining for the next run: 00:51:11
+2026-09-21 13:28:29 INFO attendance_logger.cron: Time remaining for the next run: 00:51:01
+2026-09-21 13:28:40 INFO attendance_logger.cron: Time remaining for the next run: 00:50:50
+2026-09-21 13:28:50 INFO attendance_logger.cron: Time remaining for the next run: 00:50:40
+2026-09-21 13:29:00 INFO attendance_logger.cron: Time remaining for the next run: 00:50:30
+2026-09-21 13:29:10 INFO attendance_logger.cron: Time remaining for the next run: 00:50:20
+2026-09-21 13:29:20 INFO attendance_logger.cron: Time remaining for the next run: 00:50:10
+2026-09-21 13:29:30 INFO attendance_logger.cron: Time remaining for the next run: 00:50:00
+2026-09-21 13:29:40 INFO attendance_logger.cron: Time remaining for the next run: 00:49:50
+2026-09-21 13:29:50 INFO attendance_logger.cron: Time remaining for the next run: 00:49:40
+2026-09-21 13:30:00 INFO attendance_logger.cron: Time remaining for the next run: 00:49:30
+2026-09-21 13:30:10 INFO attendance_logger.cron: Time remaining for the next run: 00:49:20
+2026-09-21 13:30:20 INFO attendance_logger.cron: Time remaining for the next run: 00:49:10
+2026-09-21 13:30:30 INFO attendance_logger.cron: Time remaining for the next run: 00:49:00
+2026-09-21 13:30:40 INFO attendance_logger.cron: Time remaining for the next run: 00:48:50
+2026-09-21 13:30:50 INFO attendance_logger.cron: Time remaining for the next run: 00:48:40
+2026-09-21 13:31:01 INFO attendance_logger.cron: Time remaining for the next run: 00:48:30
+2026-09-21 13:31:11 INFO attendance_logger.cron: Time remaining for the next run: 00:48:19
+2026-09-21 13:31:21 INFO attendance_logger.cron: Time remaining for the next run: 00:48:09
+2026-09-21 13:31:31 INFO attendance_logger.cron: Time remaining for the next run: 00:47:59
+2026-09-21 13:31:41 INFO attendance_logger.cron: Time remaining for the next run: 00:47:49
+2026-09-21 13:31:51 INFO attendance_logger.cron: Time remaining for the next run: 00:47:39
+2026-09-21 13:32:01 INFO attendance_logger.cron: Time remaining for the next run: 00:47:29
+2026-09-21 13:32:11 INFO attendance_logger.cron: Time remaining for the next run: 00:47:19
+2026-09-21 13:32:21 INFO attendance_logger.cron: Time remaining for the next run: 00:47:09
+2026-09-21 13:32:31 INFO attendance_logger.cron: Time remaining for the next run: 00:46:59
+2026-09-21 13:32:41 INFO attendance_logger.cron: Time remaining for the next run: 00:46:49
+2026-09-21 13:32:51 INFO attendance_logger.cron: Time remaining for the next run: 00:46:39
+2026-09-21 13:33:01 INFO attendance_logger.cron: Time remaining for the next run: 00:46:29
+2026-09-21 13:33:11 INFO attendance_logger.cron: Time remaining for the next run: 00:46:19
+2026-09-21 13:33:22 INFO attendance_logger.cron: Time remaining for the next run: 00:46:08
+2026-09-21 13:33:32 INFO attendance_logger.cron: Time remaining for the next run: 00:45:58
+2026-09-21 13:33:42 INFO attendance_logger.cron: Time remaining for the next run: 00:45:48
+2026-09-21 13:33:52 INFO attendance_logger.cron: Time remaining for the next run: 00:45:38
+2026-09-21 13:34:02 INFO attendance_logger.cron: Time remaining for the next run: 00:45:28
+2026-09-21 13:34:12 INFO attendance_logger.cron: Time remaining for the next run: 00:45:18
+2026-09-21 13:34:22 INFO attendance_logger.cron: Time remaining for the next run: 00:45:08
+2026-09-21 13:34:32 INFO attendance_logger.cron: Time remaining for the next run: 00:44:58
+2026-09-21 13:34:42 INFO attendance_logger.cron: Time remaining for the next run: 00:44:48
+2026-09-21 13:34:52 INFO attendance_logger.cron: Time remaining for the next run: 00:44:38
+2026-09-21 13:34:53 WARNING attendance_logger.runner: Child script exited with code -15. Restarting in 5 seconds...
+2026-09-21 13:34:58 INFO attendance_logger.runner: Starting script: run.py
+2026-09-21 13:35:00 INFO attendance_logger.connecto_auto: Connecto sign-in response: {'success': True, 'is_expired': False, 'message': 'Sign In not done successfully.', 'data': {'pop_up_msg': 'You are late today!', 'show_alert': True, 'reason_title': 'Late Sign In', 'late_mark_count': ''}}
+2026-09-21 13:35:00 INFO attendance_logger.connecto_auto: Connecto sign-in needs a reason (reason_title='Late Sign In') - retrying.
+2026-09-21 13:35:05 INFO attendance_logger.connecto_auto: Connecto sign-in retry response: {'success': True, 'is_expired': False, 'message': 'Sign In done successfully.', 'data': {'pop_up_msg': '', 'show_alert': False, 'reason_title': '', 'late_mark_count': '', 'sign_in_time': '1784789739', 'is_recruiter': 0}}
+2026-09-21 13:35:06 INFO attendance_logger.onething_api: Token check: {'headers': {'Date': 'Mon, 21 Sep 2026 08:05:05 GMT', 'Server': 'Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.6.40', 'Vary': 'Authorization,Origin', 'X-Powered-By': 'PHP/5.6.40', 'Cache-Control': 'no-cache, private', 'Access-Control-Allow-Origin': 'https://1-thing.in', 'Set-Cookie': 'laravel_session=eyJpdiI6ImRqSndVR1d5bU5RR3QrcFFqUE1oZWc9PSIsInZhbHVlIjoiYXh3YlRhcVQzSHF2TzMxd1FQVklORzdNZ3czZWtcL2dzSlNuSGNHbDJLRUZZSm1wTkdxTDhLU21ITmE3bjFVcGtWOUcrTXY5N1JFdURVK1d2NHNNNlhBPT0iLCJtYWMiOiJjMzA0ZTQ3MTAzNzkzY2FlODA1YjM0OWM0YjJhNjY0Yzg2MzFhNWIzNjZlMmY2NTM0OGI4YzgxNjkyOGY4ODI5In0%3D; expires=Mon, 21-Sep-2026 10:05:06 GMT; Max-Age=7200; path=/; httponly', 'Content-Length': '102', 'Keep-Alive': 'timeout=5, max=100', 'Connection': 'Keep-Alive', 'Content-Type': 'application/json'}, 'status_code': 200, 'data': {'success': True, 'data': {'attendance_date': '2026-09-21', 'signin_time': '01:35 PM', 'signout_time': False}}}
+2026-09-21 13:35:06 INFO attendance_logger.OneThingApi: Token valid
+2026-09-21 13:35:06 INFO attendance_logger.OneThingApi: Login funtion, token: eyJpdiI6IjNrUE1OZG1Ka3FJQkVtOURES0d1Nnc9PSIsInZhbHVlIjoibnIwNkhJempoQzBKXC9KaVwvekxxOGd1cEFtOWxCTjI0Z01tQTliN0ZXc1JvPSIsIm1hYyI6ImNjNTFiMzM2MjQwNWYxNWQ4OGYzZWZhNTllOGM0NDBkNDBkMWZmYjg4MDBjZjZmMDkwMjkwNGQ3Mjc2MWFiMjYifQ==
+2026-09-21 13:35:08 INFO attendance_logger.OneThingApi: Get time log data. {'status': True, 'timelog': {'id': 9070386, 'start_date_time': '2026-09-21 13:19:21', 'end_date_time': '2026-09-21 14:19:21', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'is_currectly_working': '1', 'idletime': '00:00:00', 'setidle': '0'}, 'todaylogs': {'01:19 PM - 02:19 PM': {'duration': 60, 'idletime': '00:00:00', 'is_currectly_working': '1', 'taskarray': [{'log_id': 11289418, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}}, 'totalhrs': '00:00', 'totalidlehrs': '00:00', 'activelogdata': [{'log_id': 11289418, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}], 'currenttime': '2026-09-21 13:35:08', 'timelogidarray': ['9070386']}
+2026-09-21 13:35:09 INFO attendance_logger.OneThingApi: Get all today's task. [{'id': 11289411, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 09:00:00', 'end_date': '2026-09-21 10:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976947953', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289414, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 10:00:00', 'end_date': '2026-09-21 11:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976948979', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289415, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 11:00:00', 'end_date': '2026-09-21 12:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976952800', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289416, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 12:00:00', 'end_date': '2026-09-21 13:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976954070', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289418, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 13:19:21', 'end_date': '2026-09-21 14:19:21', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976960117', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9070386', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}]
+2026-09-21 13:35:09 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 13:35:09 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 5.0
+2026-09-21 13:35:09 INFO attendance_logger.CRON: Logging needed True (total hours: 5.0)
+2026-09-21 13:35:09 INFO attendance_logger.cron: Logging is needed. Will start the cron after the current task ends.
+2026-09-21 13:35:10 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 13:35:10 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 5.0
+2026-09-21 13:35:10 INFO attendance_logger.CRON: Logging needed True (total hours: 5.0)
+2026-09-21 13:35:10 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 13:35:10 INFO attendance_logger.OneThingApi: Last log out time or current time: 2026-09-21 14:19:21
+2026-09-21 13:35:10 INFO attendance_logger.cron: Now: 2026-09-21 13:35:10.897323
+2026-09-21 13:35:10 INFO attendance_logger.cron: Last logout: 2026-09-21 14:19:21
+2026-09-21 13:35:10 INFO attendance_logger.cron: Start time: 2026-09-21 14:19:21
+2026-09-21 13:35:10 INFO attendance_logger.CRON: Next login time 2026-09-21 14:19:21
+2026-09-21 13:35:10 INFO attendance_logger.cron: Next login time after adding 10 seconds: 2026-09-21 14:19:31
+2026-09-21 13:35:10 INFO attendance_logger.cron: Time remaining for the next run: 00:44:20
+2026-09-21 13:35:20 INFO attendance_logger.cron: Time remaining for the next run: 00:44:10
+2026-09-21 13:35:31 INFO attendance_logger.cron: Time remaining for the next run: 00:43:59
+2026-09-21 13:35:41 INFO attendance_logger.cron: Time remaining for the next run: 00:43:49
+2026-09-21 13:35:51 INFO attendance_logger.cron: Time remaining for the next run: 00:43:39
+2026-09-21 13:36:01 INFO attendance_logger.cron: Time remaining for the next run: 00:43:29
+2026-09-21 13:36:11 INFO attendance_logger.cron: Time remaining for the next run: 00:43:19
+2026-09-21 13:36:21 INFO attendance_logger.cron: Time remaining for the next run: 00:43:09
+2026-09-21 13:36:31 INFO attendance_logger.cron: Time remaining for the next run: 00:42:59
+2026-09-21 13:36:41 INFO attendance_logger.cron: Time remaining for the next run: 00:42:49
+2026-09-21 13:36:51 INFO attendance_logger.cron: Time remaining for the next run: 00:42:39
+2026-09-21 13:37:01 INFO attendance_logger.cron: Time remaining for the next run: 00:42:29
+2026-09-21 13:37:11 INFO attendance_logger.cron: Time remaining for the next run: 00:42:19
+2026-09-21 13:37:21 INFO attendance_logger.cron: Time remaining for the next run: 00:42:09
+2026-09-21 13:37:32 INFO attendance_logger.cron: Time remaining for the next run: 00:41:58
+2026-09-21 13:37:42 INFO attendance_logger.cron: Time remaining for the next run: 00:41:48
+2026-09-21 13:37:52 INFO attendance_logger.cron: Time remaining for the next run: 00:41:38
+2026-09-21 13:38:02 INFO attendance_logger.cron: Time remaining for the next run: 00:41:28
+2026-09-21 13:38:12 INFO attendance_logger.cron: Time remaining for the next run: 00:41:18
+2026-09-21 13:38:22 INFO attendance_logger.cron: Time remaining for the next run: 00:41:08
+2026-09-21 13:38:32 INFO attendance_logger.cron: Time remaining for the next run: 00:40:58
+2026-09-21 13:38:42 INFO attendance_logger.cron: Time remaining for the next run: 00:40:48
+2026-09-21 13:38:52 INFO attendance_logger.cron: Time remaining for the next run: 00:40:38
+2026-09-21 13:39:02 INFO attendance_logger.cron: Time remaining for the next run: 00:40:28
+2026-09-21 13:39:12 INFO attendance_logger.cron: Time remaining for the next run: 00:40:18
+2026-09-21 13:39:22 INFO attendance_logger.cron: Time remaining for the next run: 00:40:08
+2026-09-21 13:39:32 INFO attendance_logger.cron: Time remaining for the next run: 00:39:58
+2026-09-21 13:39:42 INFO attendance_logger.cron: Time remaining for the next run: 00:39:48
+2026-09-21 13:39:53 INFO attendance_logger.cron: Time remaining for the next run: 00:39:37
+2026-09-21 13:40:03 INFO attendance_logger.cron: Time remaining for the next run: 00:39:27
+2026-09-21 13:40:13 INFO attendance_logger.cron: Time remaining for the next run: 00:39:17
+2026-09-21 13:40:23 INFO attendance_logger.cron: Time remaining for the next run: 00:39:07
+2026-09-21 13:40:33 INFO attendance_logger.cron: Time remaining for the next run: 00:38:57
+2026-09-21 13:40:43 INFO attendance_logger.cron: Time remaining for the next run: 00:38:47
+2026-09-21 13:40:53 INFO attendance_logger.cron: Time remaining for the next run: 00:38:37
+2026-09-21 13:41:03 INFO attendance_logger.cron: Time remaining for the next run: 00:38:27
+2026-09-21 13:41:13 INFO attendance_logger.cron: Time remaining for the next run: 00:38:17
+2026-09-21 13:41:23 INFO attendance_logger.cron: Time remaining for the next run: 00:38:07
+2026-09-21 13:41:33 INFO attendance_logger.cron: Time remaining for the next run: 00:37:57
+2026-09-21 13:41:43 INFO attendance_logger.cron: Time remaining for the next run: 00:37:47
+2026-09-21 13:41:53 INFO attendance_logger.cron: Time remaining for the next run: 00:37:37
+2026-09-21 13:42:04 INFO attendance_logger.cron: Time remaining for the next run: 00:37:26
+2026-09-21 13:42:14 INFO attendance_logger.cron: Time remaining for the next run: 00:37:16
+2026-09-21 13:42:24 INFO attendance_logger.cron: Time remaining for the next run: 00:37:06
+2026-09-21 13:42:34 INFO attendance_logger.cron: Time remaining for the next run: 00:36:56
+2026-09-21 13:42:44 INFO attendance_logger.cron: Time remaining for the next run: 00:36:46
+2026-09-21 13:42:54 INFO attendance_logger.cron: Time remaining for the next run: 00:36:36
+2026-09-21 13:43:04 INFO attendance_logger.cron: Time remaining for the next run: 00:36:26
+2026-09-21 13:43:14 INFO attendance_logger.cron: Time remaining for the next run: 00:36:16
+2026-09-21 13:43:24 INFO attendance_logger.cron: Time remaining for the next run: 00:36:06
+2026-09-21 13:43:34 INFO attendance_logger.cron: Time remaining for the next run: 00:35:56
+2026-09-21 13:43:44 INFO attendance_logger.cron: Time remaining for the next run: 00:35:46
+2026-09-21 13:43:54 INFO attendance_logger.cron: Time remaining for the next run: 00:35:36
+2026-09-21 13:44:05 INFO attendance_logger.cron: Time remaining for the next run: 00:35:25
+2026-09-21 13:44:15 INFO attendance_logger.cron: Time remaining for the next run: 00:35:15
+2026-09-21 13:44:25 INFO attendance_logger.cron: Time remaining for the next run: 00:35:05
+2026-09-21 13:44:35 INFO attendance_logger.cron: Time remaining for the next run: 00:34:55
+2026-09-21 13:44:45 INFO attendance_logger.cron: Time remaining for the next run: 00:34:45
+2026-09-21 13:44:55 INFO attendance_logger.cron: Time remaining for the next run: 00:34:35
+2026-09-21 13:45:05 INFO attendance_logger.cron: Time remaining for the next run: 00:34:25
+2026-09-21 13:45:15 INFO attendance_logger.cron: Time remaining for the next run: 00:34:15
+2026-09-21 13:45:25 INFO attendance_logger.cron: Time remaining for the next run: 00:34:05
+2026-09-21 13:45:35 INFO attendance_logger.cron: Time remaining for the next run: 00:33:55
+2026-09-21 13:45:45 INFO attendance_logger.cron: Time remaining for the next run: 00:33:45
+2026-09-21 13:45:55 INFO attendance_logger.cron: Time remaining for the next run: 00:33:35
+2026-09-21 13:46:05 INFO attendance_logger.cron: Time remaining for the next run: 00:33:25
+2026-09-21 13:46:16 INFO attendance_logger.cron: Time remaining for the next run: 00:33:14
+2026-09-21 13:46:26 INFO attendance_logger.cron: Time remaining for the next run: 00:33:04
+2026-09-21 13:46:36 INFO attendance_logger.cron: Time remaining for the next run: 00:32:54
+2026-09-21 13:46:46 INFO attendance_logger.cron: Time remaining for the next run: 00:32:44
+2026-09-21 13:46:56 INFO attendance_logger.cron: Time remaining for the next run: 00:32:34
+2026-09-21 13:47:06 INFO attendance_logger.cron: Time remaining for the next run: 00:32:24
+2026-09-21 13:47:16 INFO attendance_logger.cron: Time remaining for the next run: 00:32:14
+2026-09-21 13:47:26 INFO attendance_logger.cron: Time remaining for the next run: 00:32:04
+2026-09-21 13:47:36 INFO attendance_logger.cron: Time remaining for the next run: 00:31:54
+2026-09-21 13:47:46 INFO attendance_logger.cron: Time remaining for the next run: 00:31:44
+2026-09-21 13:47:56 INFO attendance_logger.cron: Time remaining for the next run: 00:31:34
+2026-09-21 13:48:06 INFO attendance_logger.cron: Time remaining for the next run: 00:31:24
+2026-09-21 13:48:16 INFO attendance_logger.cron: Time remaining for the next run: 00:31:14
+2026-09-21 13:48:27 INFO attendance_logger.cron: Time remaining for the next run: 00:31:03
+2026-09-21 13:48:37 INFO attendance_logger.cron: Time remaining for the next run: 00:30:53
+2026-09-21 13:48:47 INFO attendance_logger.cron: Time remaining for the next run: 00:30:43
+2026-09-21 13:48:57 INFO attendance_logger.cron: Time remaining for the next run: 00:30:33
+2026-09-21 13:49:07 INFO attendance_logger.cron: Time remaining for the next run: 00:30:23
+2026-09-21 13:49:17 INFO attendance_logger.cron: Time remaining for the next run: 00:30:13
+2026-09-21 13:49:27 INFO attendance_logger.cron: Time remaining for the next run: 00:30:03
+2026-09-21 13:49:37 INFO attendance_logger.cron: Time remaining for the next run: 00:29:53
+2026-09-21 13:49:47 INFO attendance_logger.cron: Time remaining for the next run: 00:29:43
+2026-09-21 13:49:57 INFO attendance_logger.cron: Time remaining for the next run: 00:29:33
+2026-09-21 13:50:07 INFO attendance_logger.cron: Time remaining for the next run: 00:29:23
+2026-09-21 13:50:17 INFO attendance_logger.cron: Time remaining for the next run: 00:29:13
+2026-09-21 13:50:27 INFO attendance_logger.cron: Time remaining for the next run: 00:29:03
+2026-09-21 13:50:37 INFO attendance_logger.cron: Time remaining for the next run: 00:28:53
+2026-09-21 13:50:48 INFO attendance_logger.cron: Time remaining for the next run: 00:28:42
+2026-09-21 13:50:58 INFO attendance_logger.cron: Time remaining for the next run: 00:28:32
+2026-09-21 13:51:08 INFO attendance_logger.cron: Time remaining for the next run: 00:28:22
+2026-09-21 13:51:18 INFO attendance_logger.cron: Time remaining for the next run: 00:28:12
+2026-09-21 13:51:28 INFO attendance_logger.cron: Time remaining for the next run: 00:28:02
+2026-09-21 13:51:38 INFO attendance_logger.cron: Time remaining for the next run: 00:27:52
+2026-09-21 13:51:48 INFO attendance_logger.cron: Time remaining for the next run: 00:27:42
+2026-09-21 13:51:58 INFO attendance_logger.cron: Time remaining for the next run: 00:27:32
+2026-09-21 13:52:08 INFO attendance_logger.cron: Time remaining for the next run: 00:27:22
+2026-09-21 13:52:18 INFO attendance_logger.cron: Time remaining for the next run: 00:27:12
+2026-09-21 13:52:28 INFO attendance_logger.cron: Time remaining for the next run: 00:27:02
+2026-09-21 13:52:38 INFO attendance_logger.cron: Time remaining for the next run: 00:26:52
+2026-09-21 13:52:48 INFO attendance_logger.cron: Time remaining for the next run: 00:26:42
+2026-09-21 13:52:58 INFO attendance_logger.cron: Time remaining for the next run: 00:26:32
+2026-09-21 13:53:08 INFO attendance_logger.cron: Time remaining for the next run: 00:26:22
+2026-09-21 13:53:19 INFO attendance_logger.cron: Time remaining for the next run: 00:26:11
+2026-09-21 13:53:29 INFO attendance_logger.cron: Time remaining for the next run: 00:26:01
+2026-09-21 13:53:39 INFO attendance_logger.cron: Time remaining for the next run: 00:25:51
+2026-09-21 13:53:49 INFO attendance_logger.cron: Time remaining for the next run: 00:25:41
+2026-09-21 13:53:59 INFO attendance_logger.cron: Time remaining for the next run: 00:25:31
+2026-09-21 13:54:09 INFO attendance_logger.cron: Time remaining for the next run: 00:25:21
+2026-09-21 13:54:19 INFO attendance_logger.cron: Time remaining for the next run: 00:25:11
+2026-09-21 13:54:29 INFO attendance_logger.cron: Time remaining for the next run: 00:25:01
+2026-09-21 13:54:39 INFO attendance_logger.cron: Time remaining for the next run: 00:24:51
+2026-09-21 13:54:49 INFO attendance_logger.cron: Time remaining for the next run: 00:24:41
+2026-09-21 13:54:59 INFO attendance_logger.cron: Time remaining for the next run: 00:24:31
+2026-09-21 13:55:09 INFO attendance_logger.cron: Time remaining for the next run: 00:24:21
+2026-09-21 13:55:19 INFO attendance_logger.cron: Time remaining for the next run: 00:24:11
+2026-09-21 13:55:29 INFO attendance_logger.cron: Time remaining for the next run: 00:24:01
+2026-09-21 13:55:40 INFO attendance_logger.cron: Time remaining for the next run: 00:23:50
+2026-09-21 13:55:50 INFO attendance_logger.cron: Time remaining for the next run: 00:23:40
+2026-09-21 13:56:00 INFO attendance_logger.cron: Time remaining for the next run: 00:23:30
+2026-09-21 13:56:10 INFO attendance_logger.cron: Time remaining for the next run: 00:23:20
+2026-09-21 13:56:20 INFO attendance_logger.cron: Time remaining for the next run: 00:23:10
+2026-09-21 13:56:30 INFO attendance_logger.cron: Time remaining for the next run: 00:23:00
+2026-09-21 13:56:40 INFO attendance_logger.cron: Time remaining for the next run: 00:22:50
+2026-09-21 13:56:50 INFO attendance_logger.cron: Time remaining for the next run: 00:22:40
+2026-09-21 13:57:00 INFO attendance_logger.cron: Time remaining for the next run: 00:22:30
+2026-09-21 13:57:10 INFO attendance_logger.cron: Time remaining for the next run: 00:22:20
+2026-09-21 13:57:20 INFO attendance_logger.cron: Time remaining for the next run: 00:22:10
+2026-09-21 13:57:30 INFO attendance_logger.cron: Time remaining for the next run: 00:22:00
+2026-09-21 13:57:40 INFO attendance_logger.cron: Time remaining for the next run: 00:21:50
+2026-09-21 13:57:50 INFO attendance_logger.cron: Time remaining for the next run: 00:21:40
+2026-09-21 13:58:01 INFO attendance_logger.cron: Time remaining for the next run: 00:21:29
+2026-09-21 13:58:11 INFO attendance_logger.cron: Time remaining for the next run: 00:21:19
+2026-09-21 13:58:21 INFO attendance_logger.cron: Time remaining for the next run: 00:21:09
+2026-09-21 13:58:31 INFO attendance_logger.cron: Time remaining for the next run: 00:20:59
+2026-09-21 13:58:41 INFO attendance_logger.cron: Time remaining for the next run: 00:20:49
+2026-09-21 13:58:51 INFO attendance_logger.cron: Time remaining for the next run: 00:20:39
+2026-09-21 13:59:01 INFO attendance_logger.cron: Time remaining for the next run: 00:20:29
+2026-09-21 13:59:11 INFO attendance_logger.cron: Time remaining for the next run: 00:20:19
+2026-09-21 13:59:21 INFO attendance_logger.cron: Time remaining for the next run: 00:20:09
+2026-09-21 13:59:32 INFO attendance_logger.cron: Time remaining for the next run: 00:19:58
+2026-09-21 13:59:42 INFO attendance_logger.cron: Time remaining for the next run: 00:19:48
+2026-09-21 13:59:52 INFO attendance_logger.cron: Time remaining for the next run: 00:19:38
+2026-09-21 14:00:02 INFO attendance_logger.cron: Time remaining for the next run: 00:19:28
+2026-09-21 14:00:12 INFO attendance_logger.cron: Time remaining for the next run: 00:19:18
+2026-09-21 14:00:22 INFO attendance_logger.cron: Time remaining for the next run: 00:19:08
+2026-09-21 14:00:32 INFO attendance_logger.cron: Time remaining for the next run: 00:18:58
+2026-09-21 14:00:43 INFO attendance_logger.cron: Time remaining for the next run: 00:18:47
+2026-09-21 14:00:53 INFO attendance_logger.cron: Time remaining for the next run: 00:18:37
+2026-09-21 14:01:03 INFO attendance_logger.cron: Time remaining for the next run: 00:18:27
+2026-09-21 14:01:13 INFO attendance_logger.cron: Time remaining for the next run: 00:18:17
+2026-09-21 14:01:23 INFO attendance_logger.cron: Time remaining for the next run: 00:18:07
+2026-09-21 14:01:33 INFO attendance_logger.cron: Time remaining for the next run: 00:17:57
+2026-09-21 14:01:43 INFO attendance_logger.cron: Time remaining for the next run: 00:17:47
+2026-09-21 14:01:54 INFO attendance_logger.cron: Time remaining for the next run: 00:17:36
+2026-09-21 14:02:04 INFO attendance_logger.cron: Time remaining for the next run: 00:17:26
+2026-09-21 14:02:14 INFO attendance_logger.cron: Time remaining for the next run: 00:17:16
+2026-09-21 14:02:24 INFO attendance_logger.cron: Time remaining for the next run: 00:17:06
+2026-09-21 14:02:34 INFO attendance_logger.cron: Time remaining for the next run: 00:16:56
+2026-09-21 14:02:44 INFO attendance_logger.cron: Time remaining for the next run: 00:16:46
+2026-09-21 14:02:54 INFO attendance_logger.cron: Time remaining for the next run: 00:16:36
+2026-09-21 14:03:05 INFO attendance_logger.cron: Time remaining for the next run: 00:16:25
+2026-09-21 14:03:15 INFO attendance_logger.cron: Time remaining for the next run: 00:16:15
+2026-09-21 14:03:25 INFO attendance_logger.cron: Time remaining for the next run: 00:16:05
+2026-09-21 14:03:35 INFO attendance_logger.cron: Time remaining for the next run: 00:15:55
+2026-09-21 14:03:45 INFO attendance_logger.cron: Time remaining for the next run: 00:15:45
+2026-09-21 14:03:55 INFO attendance_logger.cron: Time remaining for the next run: 00:15:35
+2026-09-21 14:04:05 INFO attendance_logger.cron: Time remaining for the next run: 00:15:25
+2026-09-21 14:04:16 INFO attendance_logger.cron: Time remaining for the next run: 00:15:14
+2026-09-21 14:04:26 INFO attendance_logger.cron: Time remaining for the next run: 00:15:04
+2026-09-21 14:04:36 INFO attendance_logger.cron: Time remaining for the next run: 00:14:54
+2026-09-21 14:04:46 INFO attendance_logger.cron: Time remaining for the next run: 00:14:44
+2026-09-21 14:04:56 INFO attendance_logger.cron: Time remaining for the next run: 00:14:34
+2026-09-21 14:05:06 INFO attendance_logger.cron: Time remaining for the next run: 00:14:24
+2026-09-21 14:05:16 INFO attendance_logger.cron: Time remaining for the next run: 00:14:14
+2026-09-21 14:05:27 INFO attendance_logger.cron: Time remaining for the next run: 00:14:03
+2026-09-21 14:05:37 INFO attendance_logger.cron: Time remaining for the next run: 00:13:53
+2026-09-21 14:05:47 INFO attendance_logger.cron: Time remaining for the next run: 00:13:43
+2026-09-21 14:05:57 INFO attendance_logger.cron: Time remaining for the next run: 00:13:33
+2026-09-21 14:06:07 INFO attendance_logger.cron: Time remaining for the next run: 00:13:23
+2026-09-21 14:06:17 INFO attendance_logger.cron: Time remaining for the next run: 00:13:13
+2026-09-21 14:06:28 INFO attendance_logger.cron: Time remaining for the next run: 00:13:02
+2026-09-21 14:06:38 INFO attendance_logger.cron: Time remaining for the next run: 00:12:52
+2026-09-21 14:06:48 INFO attendance_logger.cron: Time remaining for the next run: 00:12:42
+2026-09-21 14:06:58 INFO attendance_logger.cron: Time remaining for the next run: 00:12:32
+2026-09-21 14:07:08 INFO attendance_logger.cron: Time remaining for the next run: 00:12:22
+2026-09-21 14:07:18 INFO attendance_logger.cron: Time remaining for the next run: 00:12:12
+2026-09-21 14:07:28 INFO attendance_logger.cron: Time remaining for the next run: 00:12:02
+2026-09-21 14:07:39 INFO attendance_logger.cron: Time remaining for the next run: 00:11:51
+2026-09-21 14:07:49 INFO attendance_logger.cron: Time remaining for the next run: 00:11:41
+2026-09-21 14:07:59 INFO attendance_logger.cron: Time remaining for the next run: 00:11:31
+2026-09-21 14:08:09 INFO attendance_logger.cron: Time remaining for the next run: 00:11:21
+2026-09-21 14:08:19 INFO attendance_logger.cron: Time remaining for the next run: 00:11:11
+2026-09-21 14:08:29 INFO attendance_logger.cron: Time remaining for the next run: 00:11:01
+2026-09-21 14:08:39 INFO attendance_logger.cron: Time remaining for the next run: 00:10:51
+2026-09-21 14:08:50 INFO attendance_logger.cron: Time remaining for the next run: 00:10:40
+2026-09-21 14:09:00 INFO attendance_logger.cron: Time remaining for the next run: 00:10:30
+2026-09-21 14:09:10 INFO attendance_logger.cron: Time remaining for the next run: 00:10:20
+2026-09-21 14:09:20 INFO attendance_logger.cron: Time remaining for the next run: 00:10:10
+2026-09-21 14:09:30 INFO attendance_logger.cron: Time remaining for the next run: 00:10:00
+2026-09-21 14:09:40 INFO attendance_logger.cron: Time remaining for the next run: 00:09:50
+2026-09-21 14:09:50 INFO attendance_logger.cron: Time remaining for the next run: 00:09:40
+2026-09-21 14:10:01 INFO attendance_logger.cron: Time remaining for the next run: 00:09:29
+2026-09-21 14:10:11 INFO attendance_logger.cron: Time remaining for the next run: 00:09:19
+2026-09-21 14:10:21 INFO attendance_logger.cron: Time remaining for the next run: 00:09:09
+2026-09-21 14:10:31 INFO attendance_logger.cron: Time remaining for the next run: 00:08:59
+2026-09-21 14:10:41 INFO attendance_logger.cron: Time remaining for the next run: 00:08:49
+2026-09-21 14:10:51 INFO attendance_logger.cron: Time remaining for the next run: 00:08:39
+2026-09-21 14:11:01 INFO attendance_logger.cron: Time remaining for the next run: 00:08:29
+2026-09-21 14:11:12 INFO attendance_logger.cron: Time remaining for the next run: 00:08:18
+2026-09-21 14:11:22 INFO attendance_logger.cron: Time remaining for the next run: 00:08:08
+2026-09-21 14:11:32 INFO attendance_logger.cron: Time remaining for the next run: 00:07:58
+2026-09-21 14:11:42 INFO attendance_logger.cron: Time remaining for the next run: 00:07:48
+2026-09-21 14:11:52 INFO attendance_logger.cron: Time remaining for the next run: 00:07:38
+2026-09-21 14:12:02 INFO attendance_logger.cron: Time remaining for the next run: 00:07:28
+2026-09-21 14:12:12 INFO attendance_logger.cron: Time remaining for the next run: 00:07:18
+2026-09-21 14:12:23 INFO attendance_logger.cron: Time remaining for the next run: 00:07:07
+2026-09-21 14:12:33 INFO attendance_logger.cron: Time remaining for the next run: 00:06:57
+2026-09-21 14:12:43 INFO attendance_logger.cron: Time remaining for the next run: 00:06:47
+2026-09-21 14:12:53 INFO attendance_logger.cron: Time remaining for the next run: 00:06:37
+2026-09-21 14:13:03 INFO attendance_logger.cron: Time remaining for the next run: 00:06:27
+2026-09-21 14:13:13 INFO attendance_logger.cron: Time remaining for the next run: 00:06:17
+2026-09-21 14:13:23 INFO attendance_logger.cron: Time remaining for the next run: 00:06:07
+2026-09-21 14:13:34 INFO attendance_logger.cron: Time remaining for the next run: 00:05:56
+2026-09-21 14:13:44 INFO attendance_logger.cron: Time remaining for the next run: 00:05:46
+2026-09-21 14:13:54 INFO attendance_logger.cron: Time remaining for the next run: 00:05:36
+2026-09-21 14:14:04 INFO attendance_logger.cron: Time remaining for the next run: 00:05:26
+2026-09-21 14:14:14 INFO attendance_logger.cron: Time remaining for the next run: 00:05:16
+2026-09-21 14:14:24 INFO attendance_logger.cron: Time remaining for the next run: 00:05:06
+2026-09-21 14:14:34 INFO attendance_logger.cron: Time remaining for the next run: 00:04:56
+2026-09-21 14:14:45 INFO attendance_logger.cron: Time remaining for the next run: 00:04:45
+2026-09-21 14:14:55 INFO attendance_logger.cron: Time remaining for the next run: 00:04:35
+2026-09-21 14:15:05 INFO attendance_logger.cron: Time remaining for the next run: 00:04:25
+2026-09-21 14:15:15 INFO attendance_logger.cron: Time remaining for the next run: 00:04:15
+2026-09-21 14:43:38 INFO attendance_logger.cron: Time remaining for the next run: 00:00:00
+2026-09-21 14:43:49 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 14:43:49 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 5.0
+2026-09-21 14:43:49 INFO attendance_logger.CRON: Logging needed True (total hours: 5.0)
+2026-09-21 14:43:49 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 14:43:49 INFO attendance_logger.OneThingApi: Backfilled 0 gap block(s): []
+2026-09-21 14:43:50 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 14:43:50 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 5.0
+2026-09-21 14:43:50 INFO attendance_logger.CRON: Logging needed True (total hours: 5.0)
+2026-09-21 14:43:51 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 14:43:51 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 14:43:52 INFO attendance_logger.OneThingApi: Stopped time log
+2026-09-21 14:43:52 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 14:43:52 INFO attendance_logger.OneThingApi: Last log out time or current time: 2026-09-21 14:19:21
+2026-09-21 14:43:54 INFO attendance_logger.OneThingApi: Created time log
+2026-09-21 14:43:55 INFO attendance_logger.OneThingApi: Get time log data. {'status': True, 'timelog': {'id': 9070945, 'start_date_time': '2026-09-21 14:43:53', 'end_date_time': '2026-09-21 15:43:53', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'is_currectly_working': '1', 'idletime': '00:24:31', 'setidle': '0'}, 'todaylogs': {'01:19 PM - 02:19 PM': {'duration': 60, 'idletime': '00:00:00', 'is_currectly_working': '0', 'taskarray': [{'log_id': 11289418, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}, '02:43 PM - 03:43 PM': {'duration': 60, 'idletime': '00:24:31', 'is_currectly_working': '1', 'taskarray': [{'log_id': 11290092, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}}, 'totalhrs': '01:00', 'totalidlehrs': '00:00', 'activelogdata': [{'log_id': 11290092, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}], 'currenttime': '2026-09-21 14:43:55', 'timelogidarray': ['9070386', '9070945']}
+2026-09-21 14:43:55 INFO attendance_logger.OneThingApi: Get all today's task. [{'id': 11289411, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 09:00:00', 'end_date': '2026-09-21 10:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976947953', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289414, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 10:00:00', 'end_date': '2026-09-21 11:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976948979', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289415, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 11:00:00', 'end_date': '2026-09-21 12:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976952800', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289416, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 12:00:00', 'end_date': '2026-09-21 13:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976954070', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289418, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 13:19:21', 'end_date': '2026-09-21 14:19:21', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976960117', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9070386', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11290092, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 14:43:53', 'end_date': '2026-09-21 15:43:53', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789982032799', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9070945', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}]
+2026-09-21 14:43:56 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 14:43:56 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 6.0
+2026-09-21 14:43:56 INFO attendance_logger.CRON: Logging needed True (total hours: 6.0)
+2026-09-21 14:43:56 INFO attendance_logger.CRON: Cron cycle.
+2026-09-21 14:43:56 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 14:43:56 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 6.0
+2026-09-21 14:43:56 INFO attendance_logger.CRON: Logging needed True (total hours: 6.0)
+2026-09-21 14:43:57 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 14:43:57 INFO attendance_logger.OneThingApi: Last log out time or current time: 2026-09-21 15:43:53
+2026-09-21 14:43:57 INFO attendance_logger.cron: Now: 2026-09-21 14:43:57.703902
+2026-09-21 14:43:57 INFO attendance_logger.cron: Last logout: 2026-09-21 15:43:53
+2026-09-21 14:43:57 INFO attendance_logger.cron: Start time: 2026-09-21 15:43:53
+2026-09-21 14:43:57 INFO attendance_logger.CRON: Next login time 2026-09-21 15:43:53
+2026-09-21 14:43:57 INFO attendance_logger.cron: Next login time after adding 10 seconds: 2026-09-21 15:44:03
+2026-09-21 14:43:57 INFO attendance_logger.cron: Time remaining for the next run: 01:00:05
+2026-09-21 14:44:07 INFO attendance_logger.cron: Time remaining for the next run: 00:59:55
+2026-09-21 14:44:17 INFO attendance_logger.cron: Time remaining for the next run: 00:59:45
+2026-09-21 14:44:27 INFO attendance_logger.cron: Time remaining for the next run: 00:59:35
+2026-09-21 14:44:38 INFO attendance_logger.cron: Time remaining for the next run: 00:59:24
+2026-09-21 14:44:48 INFO attendance_logger.cron: Time remaining for the next run: 00:59:14
+2026-09-21 14:44:58 INFO attendance_logger.cron: Time remaining for the next run: 00:59:04
+2026-09-21 14:45:08 INFO attendance_logger.cron: Time remaining for the next run: 00:58:54
+2026-09-21 14:45:18 INFO attendance_logger.cron: Time remaining for the next run: 00:58:44
+2026-09-21 14:45:28 INFO attendance_logger.cron: Time remaining for the next run: 00:58:34
+2026-09-21 14:45:38 INFO attendance_logger.cron: Time remaining for the next run: 00:58:24
+2026-09-21 14:45:48 INFO attendance_logger.cron: Time remaining for the next run: 00:58:14
+2026-09-21 14:45:58 INFO attendance_logger.cron: Time remaining for the next run: 00:58:04
+2026-09-21 14:46:08 INFO attendance_logger.cron: Time remaining for the next run: 00:57:54
+2026-09-21 14:46:18 INFO attendance_logger.cron: Time remaining for the next run: 00:57:44
+2026-09-21 14:46:28 INFO attendance_logger.cron: Time remaining for the next run: 00:57:34
+2026-09-21 14:46:38 INFO attendance_logger.cron: Time remaining for the next run: 00:57:24
+2026-09-21 14:46:49 INFO attendance_logger.cron: Time remaining for the next run: 00:57:13
+2026-09-21 14:46:59 INFO attendance_logger.cron: Time remaining for the next run: 00:57:03
+2026-09-21 14:47:09 INFO attendance_logger.cron: Time remaining for the next run: 00:56:53
+2026-09-21 14:47:19 INFO attendance_logger.cron: Time remaining for the next run: 00:56:43
+2026-09-21 14:47:29 INFO attendance_logger.cron: Time remaining for the next run: 00:56:33
+2026-09-21 14:47:39 INFO attendance_logger.cron: Time remaining for the next run: 00:56:23
+2026-09-21 14:47:49 INFO attendance_logger.cron: Time remaining for the next run: 00:56:13
+2026-09-21 14:47:59 INFO attendance_logger.cron: Time remaining for the next run: 00:56:03
+2026-09-21 14:48:09 INFO attendance_logger.cron: Time remaining for the next run: 00:55:53
+2026-09-21 14:48:19 INFO attendance_logger.cron: Time remaining for the next run: 00:55:43
+2026-09-21 14:48:29 INFO attendance_logger.cron: Time remaining for the next run: 00:55:33
+2026-09-21 14:48:39 INFO attendance_logger.cron: Time remaining for the next run: 00:55:23
+2026-09-21 14:48:49 INFO attendance_logger.cron: Time remaining for the next run: 00:55:13
+2026-09-21 14:48:59 INFO attendance_logger.cron: Time remaining for the next run: 00:55:03
+2026-09-21 14:49:10 INFO attendance_logger.cron: Time remaining for the next run: 00:54:52
+2026-09-21 14:49:20 INFO attendance_logger.cron: Time remaining for the next run: 00:54:42
+2026-09-21 14:49:30 INFO attendance_logger.cron: Time remaining for the next run: 00:54:32
+2026-09-21 14:49:40 INFO attendance_logger.cron: Time remaining for the next run: 00:54:22
+2026-09-21 14:49:50 INFO attendance_logger.cron: Time remaining for the next run: 00:54:12
+2026-09-21 14:50:00 INFO attendance_logger.cron: Time remaining for the next run: 00:54:02
+2026-09-21 14:50:10 INFO attendance_logger.cron: Time remaining for the next run: 00:53:52
+2026-09-21 14:50:20 INFO attendance_logger.cron: Time remaining for the next run: 00:53:42
+2026-09-21 14:50:30 INFO attendance_logger.cron: Time remaining for the next run: 00:53:32
+2026-09-21 14:50:40 INFO attendance_logger.cron: Time remaining for the next run: 00:53:22
+2026-09-21 14:50:50 INFO attendance_logger.cron: Time remaining for the next run: 00:53:12
+2026-09-21 14:51:00 INFO attendance_logger.cron: Time remaining for the next run: 00:53:02
+2026-09-21 14:51:10 INFO attendance_logger.cron: Time remaining for the next run: 00:52:52
+2026-09-21 14:51:20 INFO attendance_logger.cron: Time remaining for the next run: 00:52:42
+2026-09-21 14:51:31 INFO attendance_logger.cron: Time remaining for the next run: 00:52:31
+2026-09-21 14:51:41 INFO attendance_logger.cron: Time remaining for the next run: 00:52:21
+2026-09-21 14:51:51 INFO attendance_logger.cron: Time remaining for the next run: 00:52:11
+2026-09-21 14:52:01 INFO attendance_logger.cron: Time remaining for the next run: 00:52:01
+2026-09-21 14:52:11 INFO attendance_logger.cron: Time remaining for the next run: 00:51:51
+2026-09-21 14:52:21 INFO attendance_logger.cron: Time remaining for the next run: 00:51:41
+2026-09-21 14:52:31 INFO attendance_logger.cron: Time remaining for the next run: 00:51:31
+2026-09-21 14:52:41 INFO attendance_logger.cron: Time remaining for the next run: 00:51:21
+2026-09-21 14:52:51 INFO attendance_logger.cron: Time remaining for the next run: 00:51:11
+2026-09-21 14:53:01 INFO attendance_logger.cron: Time remaining for the next run: 00:51:01
+2026-09-21 14:53:11 INFO attendance_logger.cron: Time remaining for the next run: 00:50:51
+2026-09-21 14:53:21 INFO attendance_logger.cron: Time remaining for the next run: 00:50:41
+2026-09-21 14:53:31 INFO attendance_logger.cron: Time remaining for the next run: 00:50:31
+2026-09-21 14:53:41 INFO attendance_logger.cron: Time remaining for the next run: 00:50:21
+2026-09-21 14:53:52 INFO attendance_logger.cron: Time remaining for the next run: 00:50:10
+2026-09-21 14:54:02 INFO attendance_logger.cron: Time remaining for the next run: 00:50:00
+2026-09-21 14:54:12 INFO attendance_logger.cron: Time remaining for the next run: 00:49:50
+2026-09-21 14:54:22 INFO attendance_logger.cron: Time remaining for the next run: 00:49:40
+2026-09-21 14:54:32 INFO attendance_logger.cron: Time remaining for the next run: 00:49:30
+2026-09-21 14:54:42 INFO attendance_logger.cron: Time remaining for the next run: 00:49:20
+2026-09-21 14:54:52 INFO attendance_logger.cron: Time remaining for the next run: 00:49:10
+2026-09-21 14:55:02 INFO attendance_logger.cron: Time remaining for the next run: 00:49:00
+2026-09-21 14:55:12 INFO attendance_logger.cron: Time remaining for the next run: 00:48:50
+2026-09-21 14:55:22 INFO attendance_logger.cron: Time remaining for the next run: 00:48:40
+2026-09-21 14:55:32 INFO attendance_logger.cron: Time remaining for the next run: 00:48:30
+2026-09-21 14:55:42 INFO attendance_logger.cron: Time remaining for the next run: 00:48:20
+2026-09-21 14:55:52 INFO attendance_logger.cron: Time remaining for the next run: 00:48:10
+2026-09-21 14:56:03 INFO attendance_logger.cron: Time remaining for the next run: 00:47:59
+2026-09-21 15:30:21 INFO attendance_logger.cron: Time remaining for the next run: 00:13:41
+2026-09-21 15:42:40 INFO attendance_logger.cron: Time remaining for the next run: 00:01:22
+2026-09-21 15:42:50 INFO attendance_logger.cron: Time remaining for the next run: 00:01:12
+2026-09-21 15:43:00 INFO attendance_logger.cron: Time remaining for the next run: 00:01:02
+2026-09-21 15:43:10 INFO attendance_logger.cron: Time remaining for the next run: 00:00:52
+2026-09-21 15:43:21 INFO attendance_logger.cron: Time remaining for the next run: 00:00:41
+2026-09-21 15:43:31 INFO attendance_logger.cron: Time remaining for the next run: 00:00:31
+2026-09-21 15:43:41 INFO attendance_logger.cron: Time remaining for the next run: 00:00:21
+2026-09-21 15:43:51 INFO attendance_logger.cron: Time remaining for the next run: 00:00:11
+2026-09-21 15:44:01 INFO attendance_logger.cron: Time remaining for the next run: 00:00:01
+2026-09-21 15:44:11 INFO attendance_logger.cron: Time remaining for the next run: 00:00:00
+2026-09-21 15:44:22 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 15:44:22 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 6.0
+2026-09-21 15:44:22 INFO attendance_logger.CRON: Logging needed True (total hours: 6.0)
+2026-09-21 15:44:22 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 15:44:22 INFO attendance_logger.OneThingApi: Backfilled 0 gap block(s): []
+2026-09-21 15:44:23 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 15:44:23 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 6.0
+2026-09-21 15:44:23 INFO attendance_logger.CRON: Logging needed True (total hours: 6.0)
+2026-09-21 15:44:24 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 15:44:24 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 15:44:25 INFO attendance_logger.OneThingApi: Stopped time log
+2026-09-21 15:44:25 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 15:44:25 INFO attendance_logger.OneThingApi: Last log out time or current time: 2026-09-21 15:43:53
+2026-09-21 15:44:27 INFO attendance_logger.OneThingApi: Created time log
+2026-09-21 15:44:27 INFO attendance_logger.OneThingApi: Get time log data. {'status': True, 'timelog': {'id': 9071338, 'start_date_time': '2026-09-21 15:44:26', 'end_date_time': '2026-09-21 16:44:26', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'is_currectly_working': '1', 'idletime': '00:00:32', 'setidle': '0'}, 'todaylogs': {'01:19 PM - 02:19 PM': {'duration': 60, 'idletime': '00:00:00', 'is_currectly_working': '0', 'taskarray': [{'log_id': 11289418, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}, '02:43 PM - 03:43 PM': {'duration': 60, 'idletime': '00:24:31', 'is_currectly_working': '0', 'taskarray': [{'log_id': 11290092, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}, '03:44 PM - 04:44 PM': {'duration': 60, 'idletime': '00:00:32', 'is_currectly_working': '1', 'taskarray': [{'log_id': 11290559, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}}, 'totalhrs': '02:00', 'totalidlehrs': '00:24', 'activelogdata': [{'log_id': 11290559, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}], 'currenttime': '2026-09-21 15:44:27', 'timelogidarray': ['9070386', '9070945', '9071338']}
+2026-09-21 15:44:28 INFO attendance_logger.OneThingApi: Get all today's task. [{'id': 11289411, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 09:00:00', 'end_date': '2026-09-21 10:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976947953', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289414, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 10:00:00', 'end_date': '2026-09-21 11:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976948979', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289415, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 11:00:00', 'end_date': '2026-09-21 12:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976952800', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289416, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 12:00:00', 'end_date': '2026-09-21 13:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976954070', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289418, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 13:19:21', 'end_date': '2026-09-21 14:19:21', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976960117', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9070386', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11290092, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 14:43:53', 'end_date': '2026-09-21 15:43:53', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789982032799', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9070945', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11290559, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 15:44:26', 'end_date': '2026-09-21 16:44:26', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789985665880', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9071338', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}]
+2026-09-21 15:44:28 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 15:44:28 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 7.0
+2026-09-21 15:44:28 INFO attendance_logger.CRON: Logging needed True (total hours: 7.0)
+2026-09-21 15:44:28 INFO attendance_logger.CRON: Cron cycle.
+2026-09-21 15:44:29 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 15:44:29 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 7.0
+2026-09-21 15:44:29 INFO attendance_logger.CRON: Logging needed True (total hours: 7.0)
+2026-09-21 15:44:30 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 15:44:30 INFO attendance_logger.OneThingApi: Last log out time or current time: 2026-09-21 16:44:26
+2026-09-21 15:44:30 INFO attendance_logger.cron: Now: 2026-09-21 15:44:30.241411
+2026-09-21 15:44:30 INFO attendance_logger.cron: Last logout: 2026-09-21 16:44:26
+2026-09-21 15:44:30 INFO attendance_logger.cron: Start time: 2026-09-21 16:44:26
+2026-09-21 15:44:30 INFO attendance_logger.CRON: Next login time 2026-09-21 16:44:26
+2026-09-21 15:44:30 INFO attendance_logger.cron: Next login time after adding 10 seconds: 2026-09-21 16:44:36
+2026-09-21 15:44:30 INFO attendance_logger.cron: Time remaining for the next run: 01:00:05
+2026-09-21 15:44:40 INFO attendance_logger.cron: Time remaining for the next run: 00:59:55
+2026-09-21 15:44:50 INFO attendance_logger.cron: Time remaining for the next run: 00:59:45
+2026-09-21 15:45:00 INFO attendance_logger.cron: Time remaining for the next run: 00:59:35
+2026-09-21 15:45:10 INFO attendance_logger.cron: Time remaining for the next run: 00:59:25
+2026-09-21 15:45:20 INFO attendance_logger.cron: Time remaining for the next run: 00:59:15
+2026-09-21 15:45:30 INFO attendance_logger.cron: Time remaining for the next run: 00:59:05
+2026-09-21 15:45:40 INFO attendance_logger.cron: Time remaining for the next run: 00:58:55
+2026-09-21 15:45:50 INFO attendance_logger.cron: Time remaining for the next run: 00:58:45
+2026-09-21 15:46:00 INFO attendance_logger.cron: Time remaining for the next run: 00:58:35
+2026-09-21 15:46:10 INFO attendance_logger.cron: Time remaining for the next run: 00:58:25
+2026-09-21 15:46:20 INFO attendance_logger.cron: Time remaining for the next run: 00:58:15
+2026-09-21 15:46:31 INFO attendance_logger.cron: Time remaining for the next run: 00:58:04
+2026-09-21 15:46:41 INFO attendance_logger.cron: Time remaining for the next run: 00:57:54
+2026-09-21 15:46:51 INFO attendance_logger.cron: Time remaining for the next run: 00:57:44
+2026-09-21 15:47:01 INFO attendance_logger.cron: Time remaining for the next run: 00:57:34
+2026-09-21 15:47:11 INFO attendance_logger.cron: Time remaining for the next run: 00:57:24
+2026-09-21 15:47:21 INFO attendance_logger.cron: Time remaining for the next run: 00:57:14
+2026-09-21 15:47:31 INFO attendance_logger.cron: Time remaining for the next run: 00:57:04
+2026-09-21 15:47:41 INFO attendance_logger.cron: Time remaining for the next run: 00:56:54
+2026-09-21 15:47:51 INFO attendance_logger.cron: Time remaining for the next run: 00:56:44
+2026-09-21 15:48:01 INFO attendance_logger.cron: Time remaining for the next run: 00:56:34
+2026-09-21 15:48:11 INFO attendance_logger.cron: Time remaining for the next run: 00:56:24
+2026-09-21 15:48:21 INFO attendance_logger.cron: Time remaining for the next run: 00:56:14
+2026-09-21 15:48:31 INFO attendance_logger.cron: Time remaining for the next run: 00:56:04
+2026-09-21 15:48:41 INFO attendance_logger.cron: Time remaining for the next run: 00:55:54
+2026-09-21 15:48:52 INFO attendance_logger.cron: Time remaining for the next run: 00:55:43
+2026-09-21 15:49:02 INFO attendance_logger.cron: Time remaining for the next run: 00:55:33
+2026-09-21 15:49:12 INFO attendance_logger.cron: Time remaining for the next run: 00:55:23
+2026-09-21 15:49:22 INFO attendance_logger.cron: Time remaining for the next run: 00:55:13
+2026-09-21 15:49:32 INFO attendance_logger.cron: Time remaining for the next run: 00:55:03
+2026-09-21 15:49:42 INFO attendance_logger.cron: Time remaining for the next run: 00:54:53
+2026-09-21 15:49:52 INFO attendance_logger.cron: Time remaining for the next run: 00:54:43
+2026-09-21 15:50:02 INFO attendance_logger.cron: Time remaining for the next run: 00:54:33
+2026-09-21 15:50:12 INFO attendance_logger.cron: Time remaining for the next run: 00:54:23
+2026-09-21 15:50:22 INFO attendance_logger.cron: Time remaining for the next run: 00:54:13
+2026-09-21 15:50:32 INFO attendance_logger.cron: Time remaining for the next run: 00:54:03
+2026-09-21 15:50:42 INFO attendance_logger.cron: Time remaining for the next run: 00:53:53
+2026-09-21 15:50:52 INFO attendance_logger.cron: Time remaining for the next run: 00:53:43
+2026-09-21 15:51:02 INFO attendance_logger.cron: Time remaining for the next run: 00:53:33
+2026-09-21 15:51:12 INFO attendance_logger.cron: Time remaining for the next run: 00:53:23
+2026-09-21 15:51:23 INFO attendance_logger.cron: Time remaining for the next run: 00:53:12
+2026-09-21 15:51:33 INFO attendance_logger.cron: Time remaining for the next run: 00:53:02
+2026-09-21 15:51:43 INFO attendance_logger.cron: Time remaining for the next run: 00:52:52
+2026-09-21 15:51:53 INFO attendance_logger.cron: Time remaining for the next run: 00:52:42
+2026-09-21 15:52:03 INFO attendance_logger.cron: Time remaining for the next run: 00:52:32
+2026-09-21 15:52:13 INFO attendance_logger.cron: Time remaining for the next run: 00:52:22
+2026-09-21 15:52:23 INFO attendance_logger.cron: Time remaining for the next run: 00:52:12
+2026-09-21 15:52:33 INFO attendance_logger.cron: Time remaining for the next run: 00:52:02
+2026-09-21 15:52:43 INFO attendance_logger.cron: Time remaining for the next run: 00:51:52
+2026-09-21 15:52:53 INFO attendance_logger.cron: Time remaining for the next run: 00:51:42
+2026-09-21 15:53:03 INFO attendance_logger.cron: Time remaining for the next run: 00:51:32
+2026-09-21 15:53:13 INFO attendance_logger.cron: Time remaining for the next run: 00:51:22
+2026-09-21 15:53:23 INFO attendance_logger.cron: Time remaining for the next run: 00:51:12
+2026-09-21 15:53:33 INFO attendance_logger.cron: Time remaining for the next run: 00:51:02
+2026-09-21 15:53:44 INFO attendance_logger.cron: Time remaining for the next run: 00:50:51
+2026-09-21 15:53:54 INFO attendance_logger.cron: Time remaining for the next run: 00:50:41
+2026-09-21 15:54:04 INFO attendance_logger.cron: Time remaining for the next run: 00:50:31
+2026-09-21 15:54:14 INFO attendance_logger.cron: Time remaining for the next run: 00:50:21
+2026-09-21 15:54:24 INFO attendance_logger.cron: Time remaining for the next run: 00:50:11
+2026-09-21 15:54:34 INFO attendance_logger.cron: Time remaining for the next run: 00:50:01
+2026-09-21 15:54:44 INFO attendance_logger.cron: Time remaining for the next run: 00:49:51
+2026-09-21 15:54:54 INFO attendance_logger.cron: Time remaining for the next run: 00:49:41
+2026-09-21 15:55:04 INFO attendance_logger.cron: Time remaining for the next run: 00:49:31
+2026-09-21 15:55:14 INFO attendance_logger.cron: Time remaining for the next run: 00:49:21
+2026-09-21 15:55:24 INFO attendance_logger.cron: Time remaining for the next run: 00:49:11
+2026-09-21 15:55:34 INFO attendance_logger.cron: Time remaining for the next run: 00:49:01
+2026-09-21 15:55:45 INFO attendance_logger.cron: Time remaining for the next run: 00:48:50
+2026-09-21 15:55:55 INFO attendance_logger.cron: Time remaining for the next run: 00:48:40
+2026-09-21 15:56:05 INFO attendance_logger.cron: Time remaining for the next run: 00:48:30
+2026-09-21 15:56:15 INFO attendance_logger.cron: Time remaining for the next run: 00:48:20
+2026-09-21 15:56:25 INFO attendance_logger.cron: Time remaining for the next run: 00:48:10
+2026-09-21 15:56:35 INFO attendance_logger.cron: Time remaining for the next run: 00:48:00
+2026-09-21 15:56:45 INFO attendance_logger.cron: Time remaining for the next run: 00:47:50
+2026-09-21 15:56:55 INFO attendance_logger.cron: Time remaining for the next run: 00:47:40
+2026-09-21 15:57:05 INFO attendance_logger.cron: Time remaining for the next run: 00:47:30
+2026-09-21 15:57:15 INFO attendance_logger.cron: Time remaining for the next run: 00:47:20
+2026-09-21 15:57:25 INFO attendance_logger.cron: Time remaining for the next run: 00:47:10
+2026-09-21 15:57:35 INFO attendance_logger.cron: Time remaining for the next run: 00:47:00
+2026-09-21 15:57:45 INFO attendance_logger.cron: Time remaining for the next run: 00:46:50
+2026-09-21 15:57:56 INFO attendance_logger.cron: Time remaining for the next run: 00:46:39
+2026-09-21 15:58:06 INFO attendance_logger.cron: Time remaining for the next run: 00:46:29
+2026-09-21 15:58:16 INFO attendance_logger.cron: Time remaining for the next run: 00:46:19
+2026-09-21 15:58:26 INFO attendance_logger.cron: Time remaining for the next run: 00:46:09
+2026-09-21 15:58:36 INFO attendance_logger.cron: Time remaining for the next run: 00:45:59
+2026-09-21 15:58:46 INFO attendance_logger.cron: Time remaining for the next run: 00:45:49
+2026-09-21 15:58:56 INFO attendance_logger.cron: Time remaining for the next run: 00:45:39
+2026-09-21 15:59:06 INFO attendance_logger.cron: Time remaining for the next run: 00:45:29
+2026-09-21 15:59:16 INFO attendance_logger.cron: Time remaining for the next run: 00:45:19
+2026-09-21 15:59:26 INFO attendance_logger.cron: Time remaining for the next run: 00:45:09
+2026-09-21 15:59:36 INFO attendance_logger.cron: Time remaining for the next run: 00:44:59
+2026-09-21 15:59:46 INFO attendance_logger.cron: Time remaining for the next run: 00:44:49
+2026-09-21 15:59:56 INFO attendance_logger.cron: Time remaining for the next run: 00:44:39
+2026-09-21 16:00:06 INFO attendance_logger.cron: Time remaining for the next run: 00:44:29
+2026-09-21 16:00:17 INFO attendance_logger.cron: Time remaining for the next run: 00:44:18
+2026-09-21 16:00:27 INFO attendance_logger.cron: Time remaining for the next run: 00:44:08
+2026-09-21 16:00:37 INFO attendance_logger.cron: Time remaining for the next run: 00:43:58
+2026-09-21 16:00:47 INFO attendance_logger.cron: Time remaining for the next run: 00:43:48
+2026-09-21 16:00:57 INFO attendance_logger.cron: Time remaining for the next run: 00:43:38
+2026-09-21 16:01:07 INFO attendance_logger.cron: Time remaining for the next run: 00:43:28
+2026-09-21 16:01:17 INFO attendance_logger.cron: Time remaining for the next run: 00:43:18
+2026-09-21 16:01:27 INFO attendance_logger.cron: Time remaining for the next run: 00:43:08
+2026-09-21 16:01:37 INFO attendance_logger.cron: Time remaining for the next run: 00:42:58
+2026-09-21 16:01:47 INFO attendance_logger.cron: Time remaining for the next run: 00:42:48
+2026-09-21 16:01:57 INFO attendance_logger.cron: Time remaining for the next run: 00:42:38
+2026-09-21 16:02:07 INFO attendance_logger.cron: Time remaining for the next run: 00:42:28
+2026-09-21 16:02:17 INFO attendance_logger.cron: Time remaining for the next run: 00:42:18
+2026-09-21 16:02:28 INFO attendance_logger.cron: Time remaining for the next run: 00:42:07
+2026-09-21 16:02:38 INFO attendance_logger.cron: Time remaining for the next run: 00:41:57
+2026-09-21 16:02:48 INFO attendance_logger.cron: Time remaining for the next run: 00:41:47
+2026-09-21 16:02:58 INFO attendance_logger.cron: Time remaining for the next run: 00:41:37
+2026-09-21 16:03:08 INFO attendance_logger.cron: Time remaining for the next run: 00:41:27
+2026-09-21 16:03:18 INFO attendance_logger.cron: Time remaining for the next run: 00:41:17
+2026-09-21 16:03:28 INFO attendance_logger.cron: Time remaining for the next run: 00:41:07
+2026-09-21 16:03:38 INFO attendance_logger.cron: Time remaining for the next run: 00:40:57
+2026-09-21 16:03:48 INFO attendance_logger.cron: Time remaining for the next run: 00:40:47
+2026-09-21 16:03:58 INFO attendance_logger.cron: Time remaining for the next run: 00:40:37
+2026-09-21 16:04:08 INFO attendance_logger.cron: Time remaining for the next run: 00:40:27
+2026-09-21 16:04:18 INFO attendance_logger.cron: Time remaining for the next run: 00:40:17
+2026-09-21 16:04:28 INFO attendance_logger.cron: Time remaining for the next run: 00:40:07
+2026-09-21 16:04:38 INFO attendance_logger.cron: Time remaining for the next run: 00:39:57
+2026-09-21 16:04:49 INFO attendance_logger.cron: Time remaining for the next run: 00:39:46
+2026-09-21 16:04:59 INFO attendance_logger.cron: Time remaining for the next run: 00:39:36
+2026-09-21 16:05:09 INFO attendance_logger.cron: Time remaining for the next run: 00:39:26
+2026-09-21 16:05:19 INFO attendance_logger.cron: Time remaining for the next run: 00:39:16
+2026-09-21 16:05:29 INFO attendance_logger.cron: Time remaining for the next run: 00:39:06
+2026-09-21 16:05:39 INFO attendance_logger.cron: Time remaining for the next run: 00:38:56
+2026-09-21 16:05:49 INFO attendance_logger.cron: Time remaining for the next run: 00:38:46
+2026-09-21 16:05:59 INFO attendance_logger.cron: Time remaining for the next run: 00:38:36
+2026-09-21 16:06:09 INFO attendance_logger.cron: Time remaining for the next run: 00:38:26
+2026-09-21 16:06:19 INFO attendance_logger.cron: Time remaining for the next run: 00:38:16
+2026-09-21 16:06:29 INFO attendance_logger.cron: Time remaining for the next run: 00:38:06
+2026-09-21 16:06:39 INFO attendance_logger.cron: Time remaining for the next run: 00:37:56
+2026-09-21 16:06:49 INFO attendance_logger.cron: Time remaining for the next run: 00:37:46
+2026-09-21 16:07:00 INFO attendance_logger.cron: Time remaining for the next run: 00:37:35
+2026-09-21 16:07:10 INFO attendance_logger.cron: Time remaining for the next run: 00:37:25
+2026-09-21 16:07:20 INFO attendance_logger.cron: Time remaining for the next run: 00:37:15
+2026-09-21 16:07:30 INFO attendance_logger.cron: Time remaining for the next run: 00:37:05
+2026-09-21 16:07:40 INFO attendance_logger.cron: Time remaining for the next run: 00:36:55
+2026-09-21 16:07:50 INFO attendance_logger.cron: Time remaining for the next run: 00:36:45
+2026-09-21 16:08:00 INFO attendance_logger.cron: Time remaining for the next run: 00:36:35
+2026-09-21 16:08:11 INFO attendance_logger.cron: Time remaining for the next run: 00:36:24
+2026-09-21 16:08:21 INFO attendance_logger.cron: Time remaining for the next run: 00:36:14
+2026-09-21 16:08:31 INFO attendance_logger.cron: Time remaining for the next run: 00:36:04
+2026-09-21 16:08:41 INFO attendance_logger.cron: Time remaining for the next run: 00:35:54
+2026-09-21 16:08:51 INFO attendance_logger.cron: Time remaining for the next run: 00:35:44
+2026-09-21 16:09:01 INFO attendance_logger.cron: Time remaining for the next run: 00:35:34
+2026-09-21 16:09:11 INFO attendance_logger.cron: Time remaining for the next run: 00:35:24
+2026-09-21 16:09:21 INFO attendance_logger.cron: Time remaining for the next run: 00:35:14
+2026-09-21 16:09:31 INFO attendance_logger.cron: Time remaining for the next run: 00:35:04
+2026-09-21 16:09:41 INFO attendance_logger.cron: Time remaining for the next run: 00:34:54
+2026-09-21 16:09:51 INFO attendance_logger.cron: Time remaining for the next run: 00:34:44
+2026-09-21 16:10:01 INFO attendance_logger.cron: Time remaining for the next run: 00:34:34
+2026-09-21 16:10:11 INFO attendance_logger.cron: Time remaining for the next run: 00:34:24
+2026-09-21 16:10:22 INFO attendance_logger.cron: Time remaining for the next run: 00:34:13
+2026-09-21 16:10:32 INFO attendance_logger.cron: Time remaining for the next run: 00:34:03
+2026-09-21 16:10:42 INFO attendance_logger.cron: Time remaining for the next run: 00:33:53
+2026-09-21 16:10:52 INFO attendance_logger.cron: Time remaining for the next run: 00:33:43
+2026-09-21 16:26:53 INFO attendance_logger.cron: Time remaining for the next run: 00:17:42
+2026-09-21 16:56:43 INFO attendance_logger.cron: Time remaining for the next run: 00:00:00
+2026-09-21 16:56:53 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 16:56:53 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 7.0
+2026-09-21 16:56:53 INFO attendance_logger.CRON: Logging needed True (total hours: 7.0)
+2026-09-21 16:56:54 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 16:56:54 INFO attendance_logger.OneThingApi: Backfilled 0 gap block(s): []
+2026-09-21 16:56:54 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 16:56:54 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 7.0
+2026-09-21 16:56:54 INFO attendance_logger.CRON: Logging needed True (total hours: 7.0)
+2026-09-21 16:56:55 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 16:56:56 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 16:56:57 INFO attendance_logger.OneThingApi: Stopped time log
+2026-09-21 16:56:58 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 16:56:58 INFO attendance_logger.OneThingApi: Last log out time or current time: 2026-09-21 16:44:26
+2026-09-21 16:57:00 INFO attendance_logger.OneThingApi: Created time log
+2026-09-21 16:57:02 INFO attendance_logger.OneThingApi: Get time log data. {'status': True, 'timelog': {'id': 9071807, 'start_date_time': '2026-09-21 16:56:59', 'end_date_time': '2026-09-21 17:56:59', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'is_currectly_working': '1', 'idletime': '00:12:32', 'setidle': '0'}, 'todaylogs': {'01:19 PM - 02:19 PM': {'duration': 60, 'idletime': '00:00:00', 'is_currectly_working': '0', 'taskarray': [{'log_id': 11289418, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}, '02:43 PM - 03:43 PM': {'duration': 60, 'idletime': '00:24:31', 'is_currectly_working': '0', 'taskarray': [{'log_id': 11290092, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}, '03:44 PM - 04:44 PM': {'duration': 60, 'idletime': '00:00:32', 'is_currectly_working': '0', 'taskarray': [{'log_id': 11290559, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}, '04:56 PM - 05:56 PM': {'duration': 60, 'idletime': '00:12:32', 'is_currectly_working': '1', 'taskarray': [{'log_id': 11291129, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}}, 'totalhrs': '03:00', 'totalidlehrs': '00:25', 'activelogdata': [{'log_id': 11291129, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}], 'currenttime': '2026-09-21 16:57:02', 'timelogidarray': ['9070386', '9070945', '9071338', '9071807']}
+2026-09-21 16:57:03 INFO attendance_logger.OneThingApi: Get all today's task. [{'id': 11289411, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 09:00:00', 'end_date': '2026-09-21 10:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976947953', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289414, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 10:00:00', 'end_date': '2026-09-21 11:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976948979', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289415, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 11:00:00', 'end_date': '2026-09-21 12:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976952800', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289416, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 12:00:00', 'end_date': '2026-09-21 13:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976954070', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289418, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 13:19:21', 'end_date': '2026-09-21 14:19:21', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976960117', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9070386', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11290092, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 14:43:53', 'end_date': '2026-09-21 15:43:53', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789982032799', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9070945', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11290559, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 15:44:26', 'end_date': '2026-09-21 16:44:26', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789985665880', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9071338', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11291129, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 16:56:59', 'end_date': '2026-09-21 17:56:59', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789990018646', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9071807', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}]
+2026-09-21 16:57:04 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 16:57:04 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 8.0
+2026-09-21 16:57:04 INFO attendance_logger.CRON: Logging needed True (total hours: 8.0)
+2026-09-21 16:57:04 INFO attendance_logger.CRON: Cron cycle.
+2026-09-21 16:57:06 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 16:57:06 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 8.0
+2026-09-21 16:57:06 INFO attendance_logger.CRON: Logging needed True (total hours: 8.0)
+2026-09-21 16:57:07 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 16:57:07 INFO attendance_logger.OneThingApi: Last log out time or current time: 2026-09-21 17:56:59
+2026-09-21 16:57:07 INFO attendance_logger.cron: Now: 2026-09-21 16:57:07.700861
+2026-09-21 16:57:07 INFO attendance_logger.cron: Last logout: 2026-09-21 17:56:59
+2026-09-21 16:57:07 INFO attendance_logger.cron: Start time: 2026-09-21 17:56:59
+2026-09-21 16:57:07 INFO attendance_logger.CRON: Next login time 2026-09-21 17:56:59
+2026-09-21 16:57:07 INFO attendance_logger.cron: Next login time after adding 10 seconds: 2026-09-21 17:57:09
+2026-09-21 16:57:07 INFO attendance_logger.cron: Time remaining for the next run: 01:00:01
+2026-09-21 16:57:17 INFO attendance_logger.cron: Time remaining for the next run: 00:59:51
+2026-09-21 16:57:27 INFO attendance_logger.cron: Time remaining for the next run: 00:59:41
+2026-09-21 16:57:37 INFO attendance_logger.cron: Time remaining for the next run: 00:59:31
+2026-09-21 16:57:47 INFO attendance_logger.cron: Time remaining for the next run: 00:59:21
+2026-09-21 16:57:58 INFO attendance_logger.cron: Time remaining for the next run: 00:59:10
+2026-09-21 16:58:08 INFO attendance_logger.cron: Time remaining for the next run: 00:59:00
+2026-09-21 16:58:18 INFO attendance_logger.cron: Time remaining for the next run: 00:58:50
+2026-09-21 16:58:28 INFO attendance_logger.cron: Time remaining for the next run: 00:58:40
+2026-09-21 16:58:38 INFO attendance_logger.cron: Time remaining for the next run: 00:58:30
+2026-09-21 16:58:48 INFO attendance_logger.cron: Time remaining for the next run: 00:58:20
+2026-09-21 16:58:58 INFO attendance_logger.cron: Time remaining for the next run: 00:58:10
+2026-09-21 16:59:08 INFO attendance_logger.cron: Time remaining for the next run: 00:58:00
+2026-09-21 16:59:18 INFO attendance_logger.cron: Time remaining for the next run: 00:57:50
+2026-09-21 16:59:28 INFO attendance_logger.cron: Time remaining for the next run: 00:57:40
+2026-09-21 16:59:38 INFO attendance_logger.cron: Time remaining for the next run: 00:57:30
+2026-09-21 16:59:48 INFO attendance_logger.cron: Time remaining for the next run: 00:57:20
+2026-09-21 16:59:58 INFO attendance_logger.cron: Time remaining for the next run: 00:57:10
+2026-09-21 17:00:08 INFO attendance_logger.cron: Time remaining for the next run: 00:57:00
+2026-09-21 17:00:19 INFO attendance_logger.cron: Time remaining for the next run: 00:56:49
+2026-09-21 17:00:29 INFO attendance_logger.cron: Time remaining for the next run: 00:56:39
+2026-09-21 17:00:39 INFO attendance_logger.cron: Time remaining for the next run: 00:56:29
+2026-09-21 17:00:49 INFO attendance_logger.cron: Time remaining for the next run: 00:56:19
+2026-09-21 17:00:59 INFO attendance_logger.cron: Time remaining for the next run: 00:56:09
+2026-09-21 17:01:09 INFO attendance_logger.cron: Time remaining for the next run: 00:55:59
+2026-09-21 17:01:19 INFO attendance_logger.cron: Time remaining for the next run: 00:55:49
+2026-09-21 17:01:29 INFO attendance_logger.cron: Time remaining for the next run: 00:55:39
+2026-09-21 17:01:39 INFO attendance_logger.cron: Time remaining for the next run: 00:55:29
+2026-09-21 17:01:49 INFO attendance_logger.cron: Time remaining for the next run: 00:55:19
+2026-09-21 17:01:59 INFO attendance_logger.cron: Time remaining for the next run: 00:55:09
+2026-09-21 17:02:09 INFO attendance_logger.cron: Time remaining for the next run: 00:54:59
+2026-09-21 17:02:19 INFO attendance_logger.cron: Time remaining for the next run: 00:54:49
+2026-09-21 17:02:30 INFO attendance_logger.cron: Time remaining for the next run: 00:54:38
+2026-09-21 17:02:40 INFO attendance_logger.cron: Time remaining for the next run: 00:54:28
+2026-09-21 17:02:50 INFO attendance_logger.cron: Time remaining for the next run: 00:54:18
+2026-09-21 17:03:00 INFO attendance_logger.cron: Time remaining for the next run: 00:54:08
+2026-09-21 17:03:10 INFO attendance_logger.cron: Time remaining for the next run: 00:53:58
+2026-09-21 17:03:20 INFO attendance_logger.cron: Time remaining for the next run: 00:53:48
+2026-09-21 17:03:30 INFO attendance_logger.cron: Time remaining for the next run: 00:53:38
+2026-09-21 17:03:40 INFO attendance_logger.cron: Time remaining for the next run: 00:53:28
+2026-09-21 17:03:50 INFO attendance_logger.cron: Time remaining for the next run: 00:53:18
+2026-09-21 17:04:00 INFO attendance_logger.cron: Time remaining for the next run: 00:53:08
+2026-09-21 17:04:10 INFO attendance_logger.cron: Time remaining for the next run: 00:52:58
+2026-09-21 17:04:20 INFO attendance_logger.cron: Time remaining for the next run: 00:52:48
+2026-09-21 17:04:30 INFO attendance_logger.cron: Time remaining for the next run: 00:52:38
+2026-09-21 17:04:40 INFO attendance_logger.cron: Time remaining for the next run: 00:52:28
+2026-09-21 17:04:51 INFO attendance_logger.cron: Time remaining for the next run: 00:52:17
+2026-09-21 17:05:01 INFO attendance_logger.cron: Time remaining for the next run: 00:52:07
+2026-09-21 17:05:11 INFO attendance_logger.cron: Time remaining for the next run: 00:51:57
+2026-09-21 17:05:21 INFO attendance_logger.cron: Time remaining for the next run: 00:51:47
+2026-09-21 17:05:31 INFO attendance_logger.cron: Time remaining for the next run: 00:51:37
+2026-09-21 17:05:41 INFO attendance_logger.cron: Time remaining for the next run: 00:51:27
+2026-09-21 17:05:51 INFO attendance_logger.cron: Time remaining for the next run: 00:51:17
+2026-09-21 17:06:01 INFO attendance_logger.cron: Time remaining for the next run: 00:51:07
+2026-09-21 17:06:11 INFO attendance_logger.cron: Time remaining for the next run: 00:50:57
+2026-09-21 17:06:21 INFO attendance_logger.cron: Time remaining for the next run: 00:50:47
+2026-09-21 17:06:31 INFO attendance_logger.cron: Time remaining for the next run: 00:50:37
+2026-09-21 17:06:41 INFO attendance_logger.cron: Time remaining for the next run: 00:50:27
+2026-09-21 17:06:51 INFO attendance_logger.cron: Time remaining for the next run: 00:50:17
+2026-09-21 17:07:01 INFO attendance_logger.cron: Time remaining for the next run: 00:50:07
+2026-09-21 17:07:11 INFO attendance_logger.cron: Time remaining for the next run: 00:49:57
+2026-09-21 17:07:22 INFO attendance_logger.cron: Time remaining for the next run: 00:49:46
+2026-09-21 17:07:32 INFO attendance_logger.cron: Time remaining for the next run: 00:49:36
+2026-09-21 17:07:42 INFO attendance_logger.cron: Time remaining for the next run: 00:49:26
+2026-09-21 17:07:52 INFO attendance_logger.cron: Time remaining for the next run: 00:49:16
+2026-09-21 17:08:02 INFO attendance_logger.cron: Time remaining for the next run: 00:49:06
+2026-09-21 17:08:12 INFO attendance_logger.cron: Time remaining for the next run: 00:48:56
+2026-09-21 17:08:22 INFO attendance_logger.cron: Time remaining for the next run: 00:48:46
+2026-09-21 17:08:32 INFO attendance_logger.cron: Time remaining for the next run: 00:48:36
+2026-09-21 17:08:42 INFO attendance_logger.cron: Time remaining for the next run: 00:48:26
+2026-09-21 17:08:52 INFO attendance_logger.cron: Time remaining for the next run: 00:48:16
+2026-09-21 17:09:02 INFO attendance_logger.cron: Time remaining for the next run: 00:48:06
+2026-09-21 17:09:12 INFO attendance_logger.cron: Time remaining for the next run: 00:47:56
+2026-09-21 17:09:22 INFO attendance_logger.cron: Time remaining for the next run: 00:47:46
+2026-09-21 17:09:32 INFO attendance_logger.cron: Time remaining for the next run: 00:47:36
+2026-09-21 17:09:43 INFO attendance_logger.cron: Time remaining for the next run: 00:47:25
+2026-09-21 17:09:53 INFO attendance_logger.cron: Time remaining for the next run: 00:47:15
+2026-09-21 17:10:03 INFO attendance_logger.cron: Time remaining for the next run: 00:47:05
+2026-09-21 17:10:13 INFO attendance_logger.cron: Time remaining for the next run: 00:46:55
+2026-09-21 17:10:23 INFO attendance_logger.cron: Time remaining for the next run: 00:46:45
+2026-09-21 17:10:33 INFO attendance_logger.cron: Time remaining for the next run: 00:46:35
+2026-09-21 17:10:43 INFO attendance_logger.cron: Time remaining for the next run: 00:46:25
+2026-09-21 17:10:53 INFO attendance_logger.cron: Time remaining for the next run: 00:46:15
+2026-09-21 17:11:03 INFO attendance_logger.cron: Time remaining for the next run: 00:46:05
+2026-09-21 17:11:13 INFO attendance_logger.cron: Time remaining for the next run: 00:45:55
+2026-09-21 17:11:23 INFO attendance_logger.cron: Time remaining for the next run: 00:45:45
+2026-09-21 17:11:33 INFO attendance_logger.cron: Time remaining for the next run: 00:45:35
+2026-09-21 17:11:43 INFO attendance_logger.cron: Time remaining for the next run: 00:45:25
+2026-09-21 17:11:54 INFO attendance_logger.cron: Time remaining for the next run: 00:45:14
+2026-09-21 17:12:04 INFO attendance_logger.cron: Time remaining for the next run: 00:45:04
+2026-09-21 17:12:14 INFO attendance_logger.cron: Time remaining for the next run: 00:44:54
+2026-09-21 17:12:24 INFO attendance_logger.cron: Time remaining for the next run: 00:44:44
+2026-09-21 17:12:34 INFO attendance_logger.cron: Time remaining for the next run: 00:44:34
+2026-09-21 17:12:44 INFO attendance_logger.cron: Time remaining for the next run: 00:44:24
+2026-09-21 17:12:54 INFO attendance_logger.cron: Time remaining for the next run: 00:44:14
+2026-09-21 17:13:04 INFO attendance_logger.cron: Time remaining for the next run: 00:44:04
+2026-09-21 17:13:14 INFO attendance_logger.cron: Time remaining for the next run: 00:43:54
+2026-09-21 17:13:24 INFO attendance_logger.cron: Time remaining for the next run: 00:43:44
+2026-09-21 17:13:34 INFO attendance_logger.cron: Time remaining for the next run: 00:43:34
+2026-09-21 17:13:44 INFO attendance_logger.cron: Time remaining for the next run: 00:43:24
+2026-09-21 17:13:54 INFO attendance_logger.cron: Time remaining for the next run: 00:43:14
+2026-09-21 17:14:05 INFO attendance_logger.cron: Time remaining for the next run: 00:43:03
+2026-09-21 17:14:15 INFO attendance_logger.cron: Time remaining for the next run: 00:42:53
+2026-09-21 17:14:25 INFO attendance_logger.cron: Time remaining for the next run: 00:42:43
+2026-09-21 17:14:35 INFO attendance_logger.cron: Time remaining for the next run: 00:42:33
+2026-09-21 17:14:45 INFO attendance_logger.cron: Time remaining for the next run: 00:42:23
+2026-09-21 17:14:55 INFO attendance_logger.cron: Time remaining for the next run: 00:42:13
+2026-09-21 17:15:05 INFO attendance_logger.cron: Time remaining for the next run: 00:42:03
+2026-09-21 17:15:15 INFO attendance_logger.cron: Time remaining for the next run: 00:41:53
+2026-09-21 17:15:25 INFO attendance_logger.cron: Time remaining for the next run: 00:41:43
+2026-09-21 17:15:35 INFO attendance_logger.cron: Time remaining for the next run: 00:41:33
+2026-09-21 17:15:45 INFO attendance_logger.cron: Time remaining for the next run: 00:41:23
+2026-09-21 17:15:55 INFO attendance_logger.cron: Time remaining for the next run: 00:41:13
+2026-09-21 17:16:05 INFO attendance_logger.cron: Time remaining for the next run: 00:41:03
+2026-09-21 17:16:15 INFO attendance_logger.cron: Time remaining for the next run: 00:40:53
+2026-09-21 17:16:26 INFO attendance_logger.cron: Time remaining for the next run: 00:40:42
+2026-09-21 17:16:36 INFO attendance_logger.cron: Time remaining for the next run: 00:40:32
+2026-09-21 17:16:46 INFO attendance_logger.cron: Time remaining for the next run: 00:40:22
+2026-09-21 17:16:56 INFO attendance_logger.cron: Time remaining for the next run: 00:40:12
+2026-09-21 17:17:06 INFO attendance_logger.cron: Time remaining for the next run: 00:40:02
+2026-09-21 17:17:16 INFO attendance_logger.cron: Time remaining for the next run: 00:39:52
+2026-09-21 17:17:26 INFO attendance_logger.cron: Time remaining for the next run: 00:39:42
+2026-09-21 17:17:36 INFO attendance_logger.cron: Time remaining for the next run: 00:39:32
+2026-09-21 17:17:46 INFO attendance_logger.cron: Time remaining for the next run: 00:39:22
+2026-09-21 17:17:56 INFO attendance_logger.cron: Time remaining for the next run: 00:39:12
+2026-09-21 17:18:06 INFO attendance_logger.cron: Time remaining for the next run: 00:39:02
+2026-09-21 17:18:16 INFO attendance_logger.cron: Time remaining for the next run: 00:38:52
+2026-09-21 17:18:26 INFO attendance_logger.cron: Time remaining for the next run: 00:38:42
+2026-09-21 17:18:36 INFO attendance_logger.cron: Time remaining for the next run: 00:38:32
+2026-09-21 17:18:47 INFO attendance_logger.cron: Time remaining for the next run: 00:38:21
+2026-09-21 17:18:57 INFO attendance_logger.cron: Time remaining for the next run: 00:38:11
+2026-09-21 17:19:07 INFO attendance_logger.cron: Time remaining for the next run: 00:38:01
+2026-09-21 17:19:17 INFO attendance_logger.cron: Time remaining for the next run: 00:37:51
+2026-09-21 17:19:27 INFO attendance_logger.cron: Time remaining for the next run: 00:37:41
+2026-09-21 17:19:37 INFO attendance_logger.cron: Time remaining for the next run: 00:37:31
+2026-09-21 17:19:47 INFO attendance_logger.cron: Time remaining for the next run: 00:37:21
+2026-09-21 17:19:57 INFO attendance_logger.cron: Time remaining for the next run: 00:37:11
+2026-09-21 17:20:07 INFO attendance_logger.cron: Time remaining for the next run: 00:37:01
+2026-09-21 17:20:17 INFO attendance_logger.cron: Time remaining for the next run: 00:36:51
+2026-09-21 17:20:27 INFO attendance_logger.cron: Time remaining for the next run: 00:36:41
+2026-09-21 17:20:37 INFO attendance_logger.cron: Time remaining for the next run: 00:36:31
+2026-09-21 17:20:47 INFO attendance_logger.cron: Time remaining for the next run: 00:36:21
+2026-09-21 17:20:57 INFO attendance_logger.cron: Time remaining for the next run: 00:36:11
+2026-09-21 17:21:08 INFO attendance_logger.cron: Time remaining for the next run: 00:36:00
+2026-09-21 17:21:18 INFO attendance_logger.cron: Time remaining for the next run: 00:35:50
+2026-09-21 17:21:28 INFO attendance_logger.cron: Time remaining for the next run: 00:35:40
+2026-09-21 17:21:38 INFO attendance_logger.cron: Time remaining for the next run: 00:35:30
+2026-09-21 17:21:48 INFO attendance_logger.cron: Time remaining for the next run: 00:35:20
+2026-09-21 17:21:58 INFO attendance_logger.cron: Time remaining for the next run: 00:35:10
+2026-09-21 17:22:08 INFO attendance_logger.cron: Time remaining for the next run: 00:35:00
+2026-09-21 17:22:18 INFO attendance_logger.cron: Time remaining for the next run: 00:34:50
+2026-09-21 17:22:28 INFO attendance_logger.cron: Time remaining for the next run: 00:34:40
+2026-09-21 17:22:38 INFO attendance_logger.cron: Time remaining for the next run: 00:34:30
+2026-09-21 17:22:48 INFO attendance_logger.cron: Time remaining for the next run: 00:34:20
+2026-09-21 17:22:58 INFO attendance_logger.cron: Time remaining for the next run: 00:34:10
+2026-09-21 17:23:08 INFO attendance_logger.cron: Time remaining for the next run: 00:34:00
+2026-09-21 17:23:18 INFO attendance_logger.cron: Time remaining for the next run: 00:33:50
+2026-09-21 17:23:29 INFO attendance_logger.cron: Time remaining for the next run: 00:33:39
+2026-09-21 17:23:39 INFO attendance_logger.cron: Time remaining for the next run: 00:33:29
+2026-09-21 17:23:49 INFO attendance_logger.cron: Time remaining for the next run: 00:33:19
+2026-09-21 17:23:59 INFO attendance_logger.cron: Time remaining for the next run: 00:33:09
+2026-09-21 17:24:09 INFO attendance_logger.cron: Time remaining for the next run: 00:32:59
+2026-09-21 17:24:19 INFO attendance_logger.cron: Time remaining for the next run: 00:32:49
+2026-09-21 17:24:29 INFO attendance_logger.cron: Time remaining for the next run: 00:32:39
+2026-09-21 17:24:39 INFO attendance_logger.cron: Time remaining for the next run: 00:32:29
+2026-09-21 17:24:49 INFO attendance_logger.cron: Time remaining for the next run: 00:32:19
+2026-09-21 17:24:59 INFO attendance_logger.cron: Time remaining for the next run: 00:32:09
+2026-09-21 17:25:09 INFO attendance_logger.cron: Time remaining for the next run: 00:31:59
+2026-09-21 17:25:19 INFO attendance_logger.cron: Time remaining for the next run: 00:31:49
+2026-09-21 17:25:29 INFO attendance_logger.cron: Time remaining for the next run: 00:31:39
+2026-09-21 17:25:39 INFO attendance_logger.cron: Time remaining for the next run: 00:31:29
+2026-09-21 17:25:49 INFO attendance_logger.cron: Time remaining for the next run: 00:31:19
+2026-09-21 17:26:00 INFO attendance_logger.cron: Time remaining for the next run: 00:31:08
+2026-09-21 17:26:10 INFO attendance_logger.cron: Time remaining for the next run: 00:30:58
+2026-09-21 17:26:20 INFO attendance_logger.cron: Time remaining for the next run: 00:30:48
+2026-09-21 17:26:30 INFO attendance_logger.cron: Time remaining for the next run: 00:30:38
+2026-09-21 17:26:40 INFO attendance_logger.cron: Time remaining for the next run: 00:30:28
+2026-09-21 17:26:50 INFO attendance_logger.cron: Time remaining for the next run: 00:30:18
+2026-09-21 17:27:00 INFO attendance_logger.cron: Time remaining for the next run: 00:30:08
+2026-09-21 17:27:10 INFO attendance_logger.cron: Time remaining for the next run: 00:29:58
+2026-09-21 17:27:20 INFO attendance_logger.cron: Time remaining for the next run: 00:29:48
+2026-09-21 17:27:30 INFO attendance_logger.cron: Time remaining for the next run: 00:29:38
+2026-09-21 17:27:40 INFO attendance_logger.cron: Time remaining for the next run: 00:29:28
+2026-09-21 17:27:50 INFO attendance_logger.cron: Time remaining for the next run: 00:29:18
+2026-09-21 17:28:00 INFO attendance_logger.cron: Time remaining for the next run: 00:29:08
+2026-09-21 17:28:11 INFO attendance_logger.cron: Time remaining for the next run: 00:28:57
+2026-09-21 17:28:21 INFO attendance_logger.cron: Time remaining for the next run: 00:28:47
+2026-09-21 17:28:31 INFO attendance_logger.cron: Time remaining for the next run: 00:28:37
+2026-09-21 17:28:41 INFO attendance_logger.cron: Time remaining for the next run: 00:28:27
+2026-09-21 17:28:51 INFO attendance_logger.cron: Time remaining for the next run: 00:28:17
+2026-09-21 17:29:01 INFO attendance_logger.cron: Time remaining for the next run: 00:28:07
+2026-09-21 17:29:11 INFO attendance_logger.cron: Time remaining for the next run: 00:27:57
+2026-09-21 17:29:21 INFO attendance_logger.cron: Time remaining for the next run: 00:27:47
+2026-09-21 17:29:31 INFO attendance_logger.cron: Time remaining for the next run: 00:27:37
+2026-09-21 17:29:41 INFO attendance_logger.cron: Time remaining for the next run: 00:27:27
+2026-09-21 17:29:51 INFO attendance_logger.cron: Time remaining for the next run: 00:27:17
+2026-09-21 17:30:01 INFO attendance_logger.cron: Time remaining for the next run: 00:27:07
+2026-09-21 17:30:11 INFO attendance_logger.cron: Time remaining for the next run: 00:26:57
+2026-09-21 17:30:21 INFO attendance_logger.cron: Time remaining for the next run: 00:26:47
+2026-09-21 17:30:31 INFO attendance_logger.cron: Time remaining for the next run: 00:26:37
+2026-09-21 17:30:42 INFO attendance_logger.cron: Time remaining for the next run: 00:26:26
+2026-09-21 17:30:52 INFO attendance_logger.cron: Time remaining for the next run: 00:26:16
+2026-09-21 17:31:02 INFO attendance_logger.cron: Time remaining for the next run: 00:26:06
+2026-09-21 17:31:12 INFO attendance_logger.cron: Time remaining for the next run: 00:25:56
+2026-09-21 17:31:22 INFO attendance_logger.cron: Time remaining for the next run: 00:25:46
+2026-09-21 17:31:32 INFO attendance_logger.cron: Time remaining for the next run: 00:25:36
+2026-09-21 17:31:42 INFO attendance_logger.cron: Time remaining for the next run: 00:25:26
+2026-09-21 17:31:52 INFO attendance_logger.cron: Time remaining for the next run: 00:25:16
+2026-09-21 17:32:02 INFO attendance_logger.cron: Time remaining for the next run: 00:25:06
+2026-09-21 17:32:12 INFO attendance_logger.cron: Time remaining for the next run: 00:24:56
+2026-09-21 17:32:22 INFO attendance_logger.cron: Time remaining for the next run: 00:24:46
+2026-09-21 17:32:33 INFO attendance_logger.cron: Time remaining for the next run: 00:24:35
+2026-09-21 17:32:43 INFO attendance_logger.cron: Time remaining for the next run: 00:24:25
+2026-09-21 17:32:53 INFO attendance_logger.cron: Time remaining for the next run: 00:24:15
+2026-09-21 17:33:03 INFO attendance_logger.cron: Time remaining for the next run: 00:24:05
+2026-09-21 17:33:13 INFO attendance_logger.cron: Time remaining for the next run: 00:23:55
+2026-09-21 17:33:23 INFO attendance_logger.cron: Time remaining for the next run: 00:23:45
+2026-09-21 17:33:33 INFO attendance_logger.cron: Time remaining for the next run: 00:23:35
+2026-09-21 17:33:44 INFO attendance_logger.cron: Time remaining for the next run: 00:23:24
+2026-09-21 17:33:54 INFO attendance_logger.cron: Time remaining for the next run: 00:23:14
+2026-09-21 17:34:04 INFO attendance_logger.cron: Time remaining for the next run: 00:23:04
+2026-09-21 17:34:14 INFO attendance_logger.cron: Time remaining for the next run: 00:22:54
+2026-09-21 17:34:24 INFO attendance_logger.cron: Time remaining for the next run: 00:22:44
+2026-09-21 17:34:34 INFO attendance_logger.cron: Time remaining for the next run: 00:22:34
+2026-09-21 17:34:44 INFO attendance_logger.cron: Time remaining for the next run: 00:22:24
+2026-09-21 17:34:55 INFO attendance_logger.cron: Time remaining for the next run: 00:22:13
+2026-09-21 17:35:05 INFO attendance_logger.cron: Time remaining for the next run: 00:22:03
+2026-09-21 17:35:15 INFO attendance_logger.cron: Time remaining for the next run: 00:21:53
+2026-09-21 17:35:25 INFO attendance_logger.cron: Time remaining for the next run: 00:21:43
+2026-09-21 17:35:35 INFO attendance_logger.cron: Time remaining for the next run: 00:21:33
+2026-09-21 17:35:45 INFO attendance_logger.cron: Time remaining for the next run: 00:21:23
+2026-09-21 17:35:55 INFO attendance_logger.cron: Time remaining for the next run: 00:21:13
+2026-09-21 17:36:06 INFO attendance_logger.cron: Time remaining for the next run: 00:21:02
+2026-09-21 17:36:16 INFO attendance_logger.cron: Time remaining for the next run: 00:20:52
+2026-09-21 17:36:26 INFO attendance_logger.cron: Time remaining for the next run: 00:20:42
+2026-09-21 17:36:36 INFO attendance_logger.cron: Time remaining for the next run: 00:20:32
+2026-09-21 17:36:46 INFO attendance_logger.cron: Time remaining for the next run: 00:20:22
+2026-09-21 17:36:56 INFO attendance_logger.cron: Time remaining for the next run: 00:20:12
+2026-09-21 17:37:06 INFO attendance_logger.cron: Time remaining for the next run: 00:20:02
+2026-09-21 17:37:17 INFO attendance_logger.cron: Time remaining for the next run: 00:19:51
+2026-09-21 17:37:27 INFO attendance_logger.cron: Time remaining for the next run: 00:19:41
+2026-09-21 17:37:37 INFO attendance_logger.cron: Time remaining for the next run: 00:19:31
+2026-09-21 17:37:47 INFO attendance_logger.cron: Time remaining for the next run: 00:19:21
+2026-09-21 17:37:57 INFO attendance_logger.cron: Time remaining for the next run: 00:19:11
+2026-09-21 17:38:07 INFO attendance_logger.cron: Time remaining for the next run: 00:19:01
+2026-09-21 17:38:18 INFO attendance_logger.cron: Time remaining for the next run: 00:18:50
+2026-09-21 17:38:28 INFO attendance_logger.cron: Time remaining for the next run: 00:18:40
+2026-09-21 17:38:38 INFO attendance_logger.cron: Time remaining for the next run: 00:18:30
+2026-09-21 17:38:48 INFO attendance_logger.cron: Time remaining for the next run: 00:18:20
+2026-09-21 17:38:58 INFO attendance_logger.cron: Time remaining for the next run: 00:18:10
+2026-09-21 17:39:08 INFO attendance_logger.cron: Time remaining for the next run: 00:18:00
+2026-09-21 17:39:18 INFO attendance_logger.cron: Time remaining for the next run: 00:17:50
+2026-09-21 17:39:28 INFO attendance_logger.cron: Time remaining for the next run: 00:17:40
+2026-09-21 17:39:38 INFO attendance_logger.cron: Time remaining for the next run: 00:17:30
+2026-09-21 17:39:48 INFO attendance_logger.cron: Time remaining for the next run: 00:17:20
+2026-09-21 17:39:58 INFO attendance_logger.cron: Time remaining for the next run: 00:17:10
+2026-09-21 17:40:08 INFO attendance_logger.cron: Time remaining for the next run: 00:17:00
+2026-09-21 17:40:18 INFO attendance_logger.cron: Time remaining for the next run: 00:16:50
+2026-09-21 17:40:29 INFO attendance_logger.cron: Time remaining for the next run: 00:16:39
+2026-09-21 17:40:39 INFO attendance_logger.cron: Time remaining for the next run: 00:16:29
+2026-09-21 17:40:49 INFO attendance_logger.cron: Time remaining for the next run: 00:16:19
+2026-09-21 17:40:59 INFO attendance_logger.cron: Time remaining for the next run: 00:16:09
+2026-09-21 17:41:09 INFO attendance_logger.cron: Time remaining for the next run: 00:15:59
+2026-09-21 17:41:19 INFO attendance_logger.cron: Time remaining for the next run: 00:15:49
+2026-09-21 17:41:29 INFO attendance_logger.cron: Time remaining for the next run: 00:15:39
+2026-09-21 17:41:39 INFO attendance_logger.cron: Time remaining for the next run: 00:15:29
+2026-09-21 17:41:49 INFO attendance_logger.cron: Time remaining for the next run: 00:15:19
+2026-09-21 17:41:59 INFO attendance_logger.cron: Time remaining for the next run: 00:15:09
+2026-09-21 17:42:09 INFO attendance_logger.cron: Time remaining for the next run: 00:14:59
+2026-09-21 17:42:19 INFO attendance_logger.cron: Time remaining for the next run: 00:14:49
+2026-09-21 17:42:29 INFO attendance_logger.cron: Time remaining for the next run: 00:14:39
+2026-09-21 17:42:39 INFO attendance_logger.cron: Time remaining for the next run: 00:14:29
+2026-09-21 17:42:50 INFO attendance_logger.cron: Time remaining for the next run: 00:14:18
+2026-09-21 17:43:00 INFO attendance_logger.cron: Time remaining for the next run: 00:14:08
+2026-09-21 17:43:10 INFO attendance_logger.cron: Time remaining for the next run: 00:13:58
+2026-09-21 17:43:20 INFO attendance_logger.cron: Time remaining for the next run: 00:13:48
+2026-09-21 17:43:30 INFO attendance_logger.cron: Time remaining for the next run: 00:13:38
+2026-09-21 17:43:40 INFO attendance_logger.cron: Time remaining for the next run: 00:13:28
+2026-09-21 17:43:50 INFO attendance_logger.cron: Time remaining for the next run: 00:13:18
+2026-09-21 17:44:00 INFO attendance_logger.cron: Time remaining for the next run: 00:13:08
+2026-09-21 17:44:10 INFO attendance_logger.cron: Time remaining for the next run: 00:12:58
+2026-09-21 17:44:20 INFO attendance_logger.cron: Time remaining for the next run: 00:12:48
+2026-09-21 17:44:30 INFO attendance_logger.cron: Time remaining for the next run: 00:12:38
+2026-09-21 17:44:40 INFO attendance_logger.cron: Time remaining for the next run: 00:12:28
+2026-09-21 17:44:50 INFO attendance_logger.cron: Time remaining for the next run: 00:12:18
+2026-09-21 17:45:01 INFO attendance_logger.cron: Time remaining for the next run: 00:12:07
+2026-09-21 17:45:11 INFO attendance_logger.cron: Time remaining for the next run: 00:11:57
+2026-09-21 17:45:21 INFO attendance_logger.cron: Time remaining for the next run: 00:11:47
+2026-09-21 17:45:31 INFO attendance_logger.cron: Time remaining for the next run: 00:11:37
+2026-09-21 17:45:41 INFO attendance_logger.cron: Time remaining for the next run: 00:11:27
+2026-09-21 17:45:51 INFO attendance_logger.cron: Time remaining for the next run: 00:11:17
+2026-09-21 17:46:01 INFO attendance_logger.cron: Time remaining for the next run: 00:11:07
+2026-09-21 17:46:11 INFO attendance_logger.cron: Time remaining for the next run: 00:10:57
+2026-09-21 17:46:21 INFO attendance_logger.cron: Time remaining for the next run: 00:10:47
+2026-09-21 17:46:31 INFO attendance_logger.cron: Time remaining for the next run: 00:10:37
+2026-09-21 17:46:41 INFO attendance_logger.cron: Time remaining for the next run: 00:10:27
+2026-09-21 17:46:51 INFO attendance_logger.cron: Time remaining for the next run: 00:10:17
+2026-09-21 17:47:01 INFO attendance_logger.cron: Time remaining for the next run: 00:10:07
+2026-09-21 17:47:11 INFO attendance_logger.cron: Time remaining for the next run: 00:09:57
+2026-09-21 17:47:22 INFO attendance_logger.cron: Time remaining for the next run: 00:09:46
+2026-09-21 17:47:32 INFO attendance_logger.cron: Time remaining for the next run: 00:09:36
+2026-09-21 17:47:42 INFO attendance_logger.cron: Time remaining for the next run: 00:09:26
+2026-09-21 17:47:52 INFO attendance_logger.cron: Time remaining for the next run: 00:09:16
+2026-09-21 17:48:02 INFO attendance_logger.cron: Time remaining for the next run: 00:09:06
+2026-09-21 17:48:12 INFO attendance_logger.cron: Time remaining for the next run: 00:08:56
+2026-09-21 17:48:22 INFO attendance_logger.cron: Time remaining for the next run: 00:08:46
+2026-09-21 17:48:32 INFO attendance_logger.cron: Time remaining for the next run: 00:08:36
+2026-09-21 17:48:42 INFO attendance_logger.cron: Time remaining for the next run: 00:08:26
+2026-09-21 17:48:52 INFO attendance_logger.cron: Time remaining for the next run: 00:08:16
+2026-09-21 17:49:02 INFO attendance_logger.cron: Time remaining for the next run: 00:08:06
+2026-09-21 17:49:12 INFO attendance_logger.cron: Time remaining for the next run: 00:07:56
+2026-09-21 17:49:22 INFO attendance_logger.cron: Time remaining for the next run: 00:07:46
+2026-09-21 17:49:32 INFO attendance_logger.cron: Time remaining for the next run: 00:07:36
+2026-09-21 17:49:43 INFO attendance_logger.cron: Time remaining for the next run: 00:07:25
+2026-09-21 17:49:53 INFO attendance_logger.cron: Time remaining for the next run: 00:07:15
+2026-09-21 17:50:03 INFO attendance_logger.cron: Time remaining for the next run: 00:07:05
+2026-09-21 17:50:13 INFO attendance_logger.cron: Time remaining for the next run: 00:06:55
+2026-09-21 17:50:23 INFO attendance_logger.cron: Time remaining for the next run: 00:06:45
+2026-09-21 17:50:33 INFO attendance_logger.cron: Time remaining for the next run: 00:06:35
+2026-09-21 17:50:43 INFO attendance_logger.cron: Time remaining for the next run: 00:06:25
+2026-09-21 17:50:53 INFO attendance_logger.cron: Time remaining for the next run: 00:06:15
+2026-09-21 17:51:03 INFO attendance_logger.cron: Time remaining for the next run: 00:06:05
+2026-09-21 17:51:13 INFO attendance_logger.cron: Time remaining for the next run: 00:05:55
+2026-09-21 17:51:24 INFO attendance_logger.cron: Time remaining for the next run: 00:05:44
+2026-09-21 17:51:34 INFO attendance_logger.cron: Time remaining for the next run: 00:05:34
+2026-09-21 17:51:44 INFO attendance_logger.cron: Time remaining for the next run: 00:05:24
+2026-09-21 17:51:54 INFO attendance_logger.cron: Time remaining for the next run: 00:05:14
+2026-09-21 17:52:04 INFO attendance_logger.cron: Time remaining for the next run: 00:05:04
+2026-09-21 17:52:14 INFO attendance_logger.cron: Time remaining for the next run: 00:04:54
+2026-09-21 17:52:24 INFO attendance_logger.cron: Time remaining for the next run: 00:04:44
+2026-09-21 17:52:34 INFO attendance_logger.cron: Time remaining for the next run: 00:04:34
+2026-09-21 17:52:44 INFO attendance_logger.cron: Time remaining for the next run: 00:04:24
+2026-09-21 17:52:54 INFO attendance_logger.cron: Time remaining for the next run: 00:04:14
+2026-09-21 17:53:04 INFO attendance_logger.cron: Time remaining for the next run: 00:04:04
+2026-09-21 17:53:14 INFO attendance_logger.cron: Time remaining for the next run: 00:03:54
+2026-09-21 17:53:24 INFO attendance_logger.cron: Time remaining for the next run: 00:03:44
+2026-09-21 17:53:34 INFO attendance_logger.cron: Time remaining for the next run: 00:03:34
+2026-09-21 17:53:45 INFO attendance_logger.cron: Time remaining for the next run: 00:03:23
+2026-09-21 17:53:55 INFO attendance_logger.cron: Time remaining for the next run: 00:03:13
+2026-09-21 17:54:05 INFO attendance_logger.cron: Time remaining for the next run: 00:03:03
+2026-09-21 17:54:15 INFO attendance_logger.cron: Time remaining for the next run: 00:02:53
+2026-09-21 17:54:25 INFO attendance_logger.cron: Time remaining for the next run: 00:02:43
+2026-09-21 17:54:35 INFO attendance_logger.cron: Time remaining for the next run: 00:02:33
+2026-09-21 17:54:45 INFO attendance_logger.cron: Time remaining for the next run: 00:02:23
+2026-09-21 17:54:55 INFO attendance_logger.cron: Time remaining for the next run: 00:02:13
+2026-09-21 17:55:05 INFO attendance_logger.cron: Time remaining for the next run: 00:02:03
+2026-09-21 17:55:15 INFO attendance_logger.cron: Time remaining for the next run: 00:01:53
+2026-09-21 17:55:25 INFO attendance_logger.cron: Time remaining for the next run: 00:01:43
+2026-09-21 17:55:35 INFO attendance_logger.cron: Time remaining for the next run: 00:01:33
+2026-09-21 17:55:45 INFO attendance_logger.cron: Time remaining for the next run: 00:01:23
+2026-09-21 17:55:55 INFO attendance_logger.cron: Time remaining for the next run: 00:01:13
+2026-09-21 17:56:05 INFO attendance_logger.cron: Time remaining for the next run: 00:01:03
+2026-09-21 17:56:16 INFO attendance_logger.cron: Time remaining for the next run: 00:00:52
+2026-09-21 17:56:26 INFO attendance_logger.cron: Time remaining for the next run: 00:00:42
+2026-09-21 17:56:36 INFO attendance_logger.cron: Time remaining for the next run: 00:00:32
+2026-09-21 17:56:46 INFO attendance_logger.cron: Time remaining for the next run: 00:00:22
+2026-09-21 17:56:56 INFO attendance_logger.cron: Time remaining for the next run: 00:00:12
+2026-09-21 17:57:06 INFO attendance_logger.cron: Time remaining for the next run: 00:00:02
+2026-09-21 17:57:16 INFO attendance_logger.cron: Time remaining for the next run: 00:00:00
+2026-09-21 17:57:28 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 17:57:28 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 8.0
+2026-09-21 17:57:28 INFO attendance_logger.CRON: Logging needed True (total hours: 8.0)
+2026-09-21 17:57:29 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 17:57:29 INFO attendance_logger.OneThingApi: Backfilled 0 gap block(s): []
+2026-09-21 17:57:30 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 17:57:30 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 8.0
+2026-09-21 17:57:30 INFO attendance_logger.CRON: Logging needed True (total hours: 8.0)
+2026-09-21 17:57:32 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 17:57:32 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 17:57:33 INFO attendance_logger.OneThingApi: Stopped time log
+2026-09-21 17:57:33 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 17:57:33 INFO attendance_logger.OneThingApi: Last log out time or current time: 2026-09-21 17:56:59
+2026-09-21 17:57:36 INFO attendance_logger.OneThingApi: Created time log
+2026-09-21 17:57:36 INFO attendance_logger.OneThingApi: Get time log data. {'status': True, 'timelog': {'id': 9072212, 'start_date_time': '2026-09-21 17:57:35', 'end_date_time': '2026-09-21 18:57:35', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'is_currectly_working': '1', 'idletime': '00:00:34', 'setidle': '0'}, 'todaylogs': {'01:19 PM - 02:19 PM': {'duration': 60, 'idletime': '00:00:00', 'is_currectly_working': '0', 'taskarray': [{'log_id': 11289418, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}, '02:43 PM - 03:43 PM': {'duration': 60, 'idletime': '00:24:31', 'is_currectly_working': '0', 'taskarray': [{'log_id': 11290092, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}, '03:44 PM - 04:44 PM': {'duration': 60, 'idletime': '00:00:32', 'is_currectly_working': '0', 'taskarray': [{'log_id': 11290559, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}, '04:56 PM - 05:56 PM': {'duration': 60, 'idletime': '00:12:32', 'is_currectly_working': '0', 'taskarray': [{'log_id': 11291129, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}, '05:57 PM - 06:57 PM': {'duration': 60, 'idletime': '00:00:34', 'is_currectly_working': '1', 'taskarray': [{'log_id': 11291659, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}]}}, 'totalhrs': '04:00', 'totalidlehrs': '00:37', 'activelogdata': [{'log_id': 11291659, 'task_id': '943172', 'description': 'Development', 'comment': 'Development', 'list_title': 'SEHA', 'workplace_name': 'PKG - Alpha Data Recruitment', 'theme_color': '#ff725e'}], 'currenttime': '2026-09-21 17:57:36', 'timelogidarray': ['9070386', '9070945', '9071338', '9071807', '9072212']}
+2026-09-21 17:57:37 INFO attendance_logger.OneThingApi: Get all today's task. [{'id': 11289411, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 09:00:00', 'end_date': '2026-09-21 10:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976947953', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289414, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 10:00:00', 'end_date': '2026-09-21 11:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976948979', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289415, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 11:00:00', 'end_date': '2026-09-21 12:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976952800', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289416, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 12:00:00', 'end_date': '2026-09-21 13:00:00', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976954070', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': '0', 'time_log_id': None, 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11289418, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 13:19:21', 'end_date': '2026-09-21 14:19:21', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789976960117', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9070386', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11290092, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 14:43:53', 'end_date': '2026-09-21 15:43:53', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789982032799', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9070945', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11290559, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 15:44:26', 'end_date': '2026-09-21 16:44:26', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789985665880', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9071338', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11291129, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 16:56:59', 'end_date': '2026-09-21 17:56:59', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789990018646', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9071807', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}, {'id': 11291659, 'task_id': '943172', 'description': 'Development', 'start_date': '2026-09-21 17:57:35', 'end_date': '2026-09-21 18:57:35', 'created_by': '16358', 'created_at': 'Sep 21 2026 12:00:00:AM', 'scheduler_id': '1789993653884', 'task_types': 'assigned', 'priority': '2', 'flag': None, 'workplace_id': '3318', 'routine_task_id': None, 'routine_completed': None, 'time_log_id': '9072212', 'tasks': {'task_id': '943172', 'list_id': '83464', 'task_title': 'Development', 'task_description': '', 'task_priority': '0', 'task_progress': '0', 'task_status': '0', 'estimated_hours': '0', 'estimated_minutes': '0', 'is_recurring': '0', 'recurring_type_id': None, 'original_task_id': None, 'start_date': '2026-03-20 00:00:00', 'end_date': None, 'created_by': '16358', 'created_on': '2026-03-20 20:40:35', 'updated_by': '16358', 'updated_on': '2026-03-20 20:40:35', 'sequence_number': '0', 'recurring_parent_id': '0', 'day_of_month': '0', 'is_group_task': '0', 'event_type_id': '1', 'parent_task_id': None, 'is_close': '0', 'is_watch': '0', 'review': None, 'stage_id': '8928', 'stage_sequence': '0', 'item_type_id': None, 'total_estimated_hours': '0', 'workplace_id': '3318', 'type_id': '16358', 'watcher_id': None, 'task_list': {'list_id': '83464', 'list_title': 'SEHA', 'list_note': None, 'created_by': '16358', 'created_on': '2026-03-20 20:39:42', 'updated_by': '16358', 'updated_on': '2026-03-20 20:39:42', 'order_number': '100000', 'workplace_id': '3318', 'is_sprint_mapped': '0'}}}]
+2026-09-21 17:57:37 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 17:57:37 INFO attendance_logger.OneThingApi: Total scheduled task hours today: 9.0
+2026-09-21 17:57:37 INFO attendance_logger.CRON: Logging needed False (total hours: 9.0)
+2026-09-21 17:57:38 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 17:57:38 INFO attendance_logger.OneThingApi: Last log out time or current time: 2026-09-21 18:57:35
+2026-09-21 17:57:38 INFO attendance_logger.cron: Now: 2026-09-21 17:57:38.558331
+2026-09-21 17:57:38 INFO attendance_logger.cron: Last logout: 2026-09-21 18:57:35
+2026-09-21 17:57:38 INFO attendance_logger.cron: Start time: 2026-09-21 18:57:35
+2026-09-21 17:57:38 INFO attendance_logger.CRON: Next login time 2026-09-21 18:57:35
+2026-09-21 17:57:38 INFO attendance_logger.cron: Next login time after adding 10 seconds: 2026-09-21 18:57:45
+2026-09-21 17:57:38 INFO attendance_logger.cron: Time remaining for the signing off: 01:00:06
+2026-09-21 17:57:48 INFO attendance_logger.cron: Time remaining for the signing off: 00:59:56
+2026-09-21 17:57:58 INFO attendance_logger.cron: Time remaining for the signing off: 00:59:46
+2026-09-21 17:58:08 INFO attendance_logger.cron: Time remaining for the signing off: 00:59:36
+2026-09-21 17:58:18 INFO attendance_logger.cron: Time remaining for the signing off: 00:59:26
+2026-09-21 17:58:28 INFO attendance_logger.cron: Time remaining for the signing off: 00:59:16
+2026-09-21 17:58:39 INFO attendance_logger.cron: Time remaining for the signing off: 00:59:05
+2026-09-21 17:58:49 INFO attendance_logger.cron: Time remaining for the signing off: 00:58:55
+2026-09-21 17:58:59 INFO attendance_logger.cron: Time remaining for the signing off: 00:58:45
+2026-09-21 17:59:09 INFO attendance_logger.cron: Time remaining for the signing off: 00:58:35
+2026-09-21 17:59:19 INFO attendance_logger.cron: Time remaining for the signing off: 00:58:25
+2026-09-21 17:59:29 INFO attendance_logger.cron: Time remaining for the signing off: 00:58:15
+2026-09-21 17:59:39 INFO attendance_logger.cron: Time remaining for the signing off: 00:58:05
+2026-09-21 17:59:49 INFO attendance_logger.cron: Time remaining for the signing off: 00:57:55
+2026-09-21 17:59:59 INFO attendance_logger.cron: Time remaining for the signing off: 00:57:45
+2026-09-21 18:00:09 INFO attendance_logger.cron: Time remaining for the signing off: 00:57:35
+2026-09-21 18:00:19 INFO attendance_logger.cron: Time remaining for the signing off: 00:57:25
+2026-09-21 18:00:29 INFO attendance_logger.cron: Time remaining for the signing off: 00:57:15
+2026-09-21 18:00:39 INFO attendance_logger.cron: Time remaining for the signing off: 00:57:05
+2026-09-21 18:00:49 INFO attendance_logger.cron: Time remaining for the signing off: 00:56:55
+2026-09-21 18:01:00 INFO attendance_logger.cron: Time remaining for the signing off: 00:56:44
+2026-09-21 18:01:10 INFO attendance_logger.cron: Time remaining for the signing off: 00:56:34
+2026-09-21 18:01:20 INFO attendance_logger.cron: Time remaining for the signing off: 00:56:24
+2026-09-21 18:01:30 INFO attendance_logger.cron: Time remaining for the signing off: 00:56:14
+2026-09-21 18:01:40 INFO attendance_logger.cron: Time remaining for the signing off: 00:56:04
+2026-09-21 18:01:50 INFO attendance_logger.cron: Time remaining for the signing off: 00:55:54
+2026-09-21 18:02:00 INFO attendance_logger.cron: Time remaining for the signing off: 00:55:44
+2026-09-21 18:02:10 INFO attendance_logger.cron: Time remaining for the signing off: 00:55:34
+2026-09-21 18:02:20 INFO attendance_logger.cron: Time remaining for the signing off: 00:55:24
+2026-09-21 18:02:30 INFO attendance_logger.cron: Time remaining for the signing off: 00:55:14
+2026-09-21 18:02:40 INFO attendance_logger.cron: Time remaining for the signing off: 00:55:04
+2026-09-21 18:02:50 INFO attendance_logger.cron: Time remaining for the signing off: 00:54:54
+2026-09-21 18:03:00 INFO attendance_logger.cron: Time remaining for the signing off: 00:54:44
+2026-09-21 18:03:10 INFO attendance_logger.cron: Time remaining for the signing off: 00:54:34
+2026-09-21 18:03:20 INFO attendance_logger.cron: Time remaining for the signing off: 00:54:24
+2026-09-21 18:03:31 INFO attendance_logger.cron: Time remaining for the signing off: 00:54:13
+2026-09-21 18:03:41 INFO attendance_logger.cron: Time remaining for the signing off: 00:54:03
+2026-09-21 18:03:51 INFO attendance_logger.cron: Time remaining for the signing off: 00:53:53
+2026-09-21 18:04:01 INFO attendance_logger.cron: Time remaining for the signing off: 00:53:43
+2026-09-21 18:04:11 INFO attendance_logger.cron: Time remaining for the signing off: 00:53:33
+2026-09-21 18:04:21 INFO attendance_logger.cron: Time remaining for the signing off: 00:53:23
+2026-09-21 18:04:31 INFO attendance_logger.cron: Time remaining for the signing off: 00:53:13
+2026-09-21 18:04:41 INFO attendance_logger.cron: Time remaining for the signing off: 00:53:03
+2026-09-21 18:04:51 INFO attendance_logger.cron: Time remaining for the signing off: 00:52:53
+2026-09-21 18:05:01 INFO attendance_logger.cron: Time remaining for the signing off: 00:52:43
+2026-09-21 18:05:11 INFO attendance_logger.cron: Time remaining for the signing off: 00:52:33
+2026-09-21 18:05:21 INFO attendance_logger.cron: Time remaining for the signing off: 00:52:23
+2026-09-21 18:05:31 INFO attendance_logger.cron: Time remaining for the signing off: 00:52:13
+2026-09-21 18:05:41 INFO attendance_logger.cron: Time remaining for the signing off: 00:52:03
+2026-09-21 18:05:52 INFO attendance_logger.cron: Time remaining for the signing off: 00:51:52
+2026-09-21 18:06:02 INFO attendance_logger.cron: Time remaining for the signing off: 00:51:42
+2026-09-21 18:06:12 INFO attendance_logger.cron: Time remaining for the signing off: 00:51:32
+2026-09-21 18:06:22 INFO attendance_logger.cron: Time remaining for the signing off: 00:51:22
+2026-09-21 18:06:32 INFO attendance_logger.cron: Time remaining for the signing off: 00:51:12
+2026-09-21 18:06:42 INFO attendance_logger.cron: Time remaining for the signing off: 00:51:02
+2026-09-21 18:06:52 INFO attendance_logger.cron: Time remaining for the signing off: 00:50:52
+2026-09-21 18:07:02 INFO attendance_logger.cron: Time remaining for the signing off: 00:50:42
+2026-09-21 18:07:12 INFO attendance_logger.cron: Time remaining for the signing off: 00:50:32
+2026-09-21 18:07:22 INFO attendance_logger.cron: Time remaining for the signing off: 00:50:22
+2026-09-21 18:07:32 INFO attendance_logger.cron: Time remaining for the signing off: 00:50:12
+2026-09-21 18:07:42 INFO attendance_logger.cron: Time remaining for the signing off: 00:50:02
+2026-09-21 18:07:52 INFO attendance_logger.cron: Time remaining for the signing off: 00:49:52
+2026-09-21 18:08:02 INFO attendance_logger.cron: Time remaining for the signing off: 00:49:42
+2026-09-21 18:08:12 INFO attendance_logger.cron: Time remaining for the signing off: 00:49:32
+2026-09-21 18:08:22 INFO attendance_logger.cron: Time remaining for the signing off: 00:49:22
+2026-09-21 18:08:33 INFO attendance_logger.cron: Time remaining for the signing off: 00:49:11
+2026-09-21 18:08:43 INFO attendance_logger.cron: Time remaining for the signing off: 00:49:01
+2026-09-21 18:08:53 INFO attendance_logger.cron: Time remaining for the signing off: 00:48:51
+2026-09-21 18:09:03 INFO attendance_logger.cron: Time remaining for the signing off: 00:48:41
+2026-09-21 18:09:13 INFO attendance_logger.cron: Time remaining for the signing off: 00:48:31
+2026-09-21 18:09:23 INFO attendance_logger.cron: Time remaining for the signing off: 00:48:21
+2026-09-21 18:09:33 INFO attendance_logger.cron: Time remaining for the signing off: 00:48:11
+2026-09-21 18:09:43 INFO attendance_logger.cron: Time remaining for the signing off: 00:48:01
+2026-09-21 18:09:53 INFO attendance_logger.cron: Time remaining for the signing off: 00:47:51
+2026-09-21 18:10:03 INFO attendance_logger.cron: Time remaining for the signing off: 00:47:41
+2026-09-21 18:10:13 INFO attendance_logger.cron: Time remaining for the signing off: 00:47:31
+2026-09-21 18:10:23 INFO attendance_logger.cron: Time remaining for the signing off: 00:47:21
+2026-09-21 18:10:33 INFO attendance_logger.cron: Time remaining for the signing off: 00:47:11
+2026-09-21 18:10:43 INFO attendance_logger.cron: Time remaining for the signing off: 00:47:01
+2026-09-21 18:10:54 INFO attendance_logger.cron: Time remaining for the signing off: 00:46:50
+2026-09-21 18:28:39 INFO attendance_logger.cron: Time remaining for the signing off: 00:29:05
+2026-09-21 18:59:17 INFO attendance_logger.cron: Time remaining for the signing off: 00:00:00
+2026-09-21 19:49:31 WARNING attendance_logger.onething_api: Request to /gettodayTasks failed (attempt 1/3): {'error': 'Request failed', 'details': 'HTTPSConnectionPool(host=\'be.1-thing.in\', port=443): Max retries exceeded with url: /gettodayTasks (Caused by NameResolutionError("HTTPSConnection(host=\'be.1-thing.in\', port=443): Failed to resolve \'be.1-thing.in\' ([Errno 8] nodename nor servname provided, or not known)"))'}
+2026-09-21 20:03:52 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 20:03:53 INFO attendance_logger.onething_api: Signin Info: {'headers': {'Date': 'Mon, 21 Sep 2026 14:33:53 GMT', 'Server': 'Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.6.40', 'Vary': 'Authorization,Origin', 'X-Powered-By': 'PHP/5.6.40', 'Cache-Control': 'no-cache, private', 'Access-Control-Allow-Origin': 'https://1-thing.in', 'Set-Cookie': 'laravel_session=eyJpdiI6ImhybDZGUUJnKzQrM2JXdmhVaWRmY0E9PSIsInZhbHVlIjoidjIwTEVXckNRVzV3WEtKbVF4WG1JYjlOS1luT3ZPMHZYUUkxT2c4a1MyeU9ZRlVuUGZid2ZaZjRQMzJcL0N3N3p1RjFmSXN1SjB4RDZjVmduT0hCT0hBPT0iLCJtYWMiOiJlNzZhMjkyNmFhMmQ2NGZkYmE4ZGU3OGUyMTM5MzIxYmJhMWMzZjQ2NGY2ZmMxYTc2NmM5MjdhMzdiNGI1Y2IzIn0%3D; expires=Mon, 21-Sep-2026 16:33:53 GMT; Max-Age=7200; path=/; httponly', 'Content-Length': '250', 'Keep-Alive': 'timeout=5, max=100', 'Connection': 'Keep-Alive', 'Content-Type': 'application/json'}, 'status_code': 200, 'data': {'status': True, 'sigininfo': {'attendance_date': '2026-09-21', 'in_time': '09:00', 'subject': 'Online for 21 September 2026', 'body': '', 'signature': 'Shubham Kashyap', 'created_by': '16358', 'workplace_id': '3318', 'created_on': '2026-09-21 20:03:53', 'id': 1476983}}} {'in_time': '09:00', 'subject': 'Online for 21 September 2026', 'body': '', 'signature': 'Shubham Kashyap', 'workplace_id': '3318', 'attendance_date': '2026-09-21'}
+2026-09-21 20:03:53 INFO attendance_logger.OneThingApi: Mark today's sign in.
+2026-09-21 20:03:54 INFO attendance_logger.OneThingApi: Get signin mailIds
+2026-09-21 20:03:54 INFO attendance_logger.OneThingApi: Get time log data. 
+2026-09-21 20:03:54 INFO attendance_logger.OneThingApi: Get today's in time: 13:19
+2026-09-21 20:03:55 INFO attendance_logger.OneThingApi: Sent today's signin mail.
+2026-09-21 20:03:56 INFO attendance_logger.OneThingApi: Mark today's sign out.
+2026-09-21 20:03:57 INFO attendance_logger.OneThingApi: Get signin mailIds
+2026-09-21 20:03:58 INFO attendance_logger.OneThingApi: Get today's signIn and signOut info.
+2026-09-21 20:03:58 INFO attendance_logger.OneThingApi: Get all today's task. 
+2026-09-21 20:03:59 INFO attendance_logger.OneThingApi: Send sign out mail.
